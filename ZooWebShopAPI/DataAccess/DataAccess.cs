@@ -27,20 +27,6 @@ namespace ZooWebShopAPI.DataAccess
 
             return result;
         }
-
-        public async Task<Product> AddNewProduct(string firstName, decimal price)
-        {
-            var product = new Product()
-            {
-                Name = firstName,
-                Price = price
-            };
-
-            await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
-
-            return product;
-        }
         public async Task<Product> GetProductById(int id)
         {
             var product = await _context

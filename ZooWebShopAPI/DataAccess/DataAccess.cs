@@ -50,5 +50,11 @@ namespace ZooWebShopAPI.DataAccess
 
             return product;
         }
+
+        public async Task AddNewCategory(Category category)
+        {
+            await _context.AddAsync(category);
+            await _context.SaveChangesAsync();
+        }
     }
 }

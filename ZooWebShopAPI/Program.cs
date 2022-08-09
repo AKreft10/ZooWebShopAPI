@@ -1,5 +1,6 @@
 using MediatR;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.Middleware;
 using ZooWebShopAPI.Persistence.DbContexts;
 using ZooWebShopAPI.Persistence.Seeders;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IDataAccess, DataAccess>();
 builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddScoped<DbSeeder>();
+builder.Services.AddScoped<ExceptionHandler>();
 
 var app = builder.Build();
 
@@ -28,7 +30,7 @@ if (app.Environment.IsDevelopment())
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
 await seeder.SeedData();
-
+app.UseMiddleware<ExceptionHandler>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -35,7 +35,7 @@ namespace ZooWebShopAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
 
                     b.HasData(
                         new
@@ -109,7 +109,7 @@ namespace ZooWebShopAPI.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Product", b =>
@@ -135,7 +135,7 @@ namespace ZooWebShopAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.ProductCategory", b =>
@@ -150,7 +150,7 @@ namespace ZooWebShopAPI.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ProductCategory");
+                    b.ToTable("ProductCategory", (string)null);
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>

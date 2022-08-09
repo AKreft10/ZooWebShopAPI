@@ -35,7 +35,5 @@ namespace ZooWebShopAPI.Controllers
             var result = await _mediator.Send(new GetProductByIdQuery(id));
             return Ok(result);
         }
-
-
     }
 }

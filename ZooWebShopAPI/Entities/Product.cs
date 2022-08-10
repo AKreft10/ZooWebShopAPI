@@ -18,5 +18,6 @@ namespace ZooWebShopAPI.Entities
         public List<Photo> Photos { get; set; }
         public int MainPhotoId { get; set; } = 1;
         public List<ProductCategory> ProductCategories { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now; 
     }
 }

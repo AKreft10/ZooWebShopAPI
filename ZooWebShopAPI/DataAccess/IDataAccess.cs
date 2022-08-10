@@ -9,5 +9,6 @@ namespace ZooWebShopAPI.DataAccess
         Task AddNewCategory(Category category);
         Task<List<Product>> GetProductsByCategoryId(int id);
         Task<List<Product>> GetProductsByCategoryName(string name);
+        Task AddNewProduct(Product productToAdd);
     }
 }

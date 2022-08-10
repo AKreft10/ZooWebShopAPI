@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Feautures\Categories\Queries\" />
+    <Folder Include="Feautures\Products\Commands\" />
   </ItemGroup>
 
 </Project>

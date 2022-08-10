@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using ZooWebShopAPI.Entities;
-using ZooWebShopAPI.Models;
+using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Feautures.Categories.Commands
 {
-    public record AddNewCategoryCommand(string name) : IRequest<CategoryDto>;
+    public record AddNewCategoryCommand(string name) : IRequest<AddCategoryDto>;
 }

@@ -32,7 +32,7 @@ var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
 await seeder.SeedData();
 app.UseMiddleware<ExceptionHandler>();
 app.UseHttpsRedirection();
-
+app.UseDeveloperExceptionPage();
 app.UseAuthorization();
 
 app.MapControllers();

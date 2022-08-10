@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Feautures.Categories.Commands;
+using ZooWebShopAPI.Feautures.Categories.Queries;
 
 namespace ZooWebShopAPI.Controllers
 {
@@ -24,6 +25,13 @@ namespace ZooWebShopAPI.Controllers
         public async Task<IActionResult> AddNewCategory([FromBody]string category)
         {
             var result = await _mediator.Send(new AddNewCategoryCommand(category));
+            return Ok(result);
+        }
+
+        [HttpGet("{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategoryId([FromRoute]int categoryId)
+        {
+            var result = await _mediator.Send(new GetProductsByCategoryIdQuery(categoryId));
             return Ok(result);
         }
     }

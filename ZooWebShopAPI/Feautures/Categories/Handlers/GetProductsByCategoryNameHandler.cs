@@ -1,24 +1,31 @@
 ﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Categories.Queries;
 using ZooWebShopAPI.Models;
+using ZooWebShopAPI.ReadModels;
 
 namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {
-    public class GetProductsByCategoryIdHandler : IRequestHandler<GetProductsByCategoryIdQuery, List<ProductModel>>
+
+
+    public class GetProductsByCategoryNameHandler : IRequestHandler<GetProductsByCategoryNameQuery, List<ProductModel>>
     {
         private readonly IDataAccess _dataAccess;
 
-        public GetProductsByCategoryIdHandler(IDataAccess dataAccess)
+        public GetProductsByCategoryNameHandler(IDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }
 
-        public async Task<List<ProductModel>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<ProductModel>> Handle(GetProductsByCategoryNameQuery request, CancellationToken cancellationToken)
         {
-            var result = await _dataAccess.GetProductsByCategoryId(request.id);
+            var result = await _dataAccess.GetProductsByCategoryName(request.name);
 
             if (result is null)
                 throw new NotFoundException("Products not found");
@@ -35,7 +42,6 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
                     PhotoUrl = z.PhotoUrl,
                 }).ToList()
             }).ToList();
-
 
             return resultProduct;
         }

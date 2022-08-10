@@ -12,7 +12,7 @@ using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Handlers
 {
-    public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
+    public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductModel>
     {
         private readonly IDataAccess _dataAccess;
 
@@ -21,21 +21,21 @@ namespace ZooWebShopAPI.Handlers
             _dataAccess = dataAccess;
         }
 
-        public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ProductModel> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _dataAccess.GetProductById(request.id);
 
             if (result is null)
                 throw new NotFoundException("Product not found.");
 
-            var resultProduct = new ProductDto()
+            var resultProduct = new ProductModel()
             {
                 Name = result.Name,
                 OriginalPrice = result.OriginalPrice,
                 Price = result.Price,
                 MainPhotoId = result.MainPhotoId,
 
-                Photos = result.Photos.Select(z => new PhotoDto
+                Photos = result.Photos.Select(z => new PhotoModel
                 {
                     Id = z.Id,
                     PhotoUrl = z.PhotoUrl

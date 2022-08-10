@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZooWebShopAPI.Models
 {
-    public class PhotoDto
+    public class PhotoModel
     {
         public int Id { get; set; }
         [Required]

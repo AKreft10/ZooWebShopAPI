@@ -36,7 +36,6 @@ namespace ZooWebShopAPI.DataAccess
 
             return product;
         }
-
         public async Task AddNewCategory(Category category)
         {
             await _context.AddAsync(category);
@@ -49,6 +48,18 @@ namespace ZooWebShopAPI.DataAccess
                 .Include(z => z.Product)
                 .ThenInclude(z => z.Photos)
                 .Where(z => z.CategoryId == id)
+                .Select(z => z.Product)
+                .ToListAsync();
+
+            return result;
+        }
+        public async Task<List<Product>> GetProductsByCategoryName(string name)
+        {
+            var result = await _context
+                .ProductCategory
+                .Include(z => z.Product)
+                .ThenInclude(z => z.Photos)
+                .Where(z => z.Category.Name.ToLower() == name.ToLower())
                 .Select(z => z.Product)
                 .ToListAsync();
 

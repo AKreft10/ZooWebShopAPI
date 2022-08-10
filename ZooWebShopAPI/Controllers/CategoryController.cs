@@ -28,10 +28,17 @@ namespace ZooWebShopAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("id/{categoryId}")]
         public async Task<IActionResult> GetProductsByCategoryId([FromRoute]int categoryId)
         {
             var result = await _mediator.Send(new GetProductsByCategoryIdQuery(categoryId));
+            return Ok(result);
+        }
+
+        [HttpGet("name/{categoryName}")]
+        public async Task<IActionResult> GetProductsByCategoryName([FromRoute]string categoryName)
+        {
+            var result = await _mediator.Send(new GetProductsByCategoryNameQuery(categoryName));
             return Ok(result);
         }
     }

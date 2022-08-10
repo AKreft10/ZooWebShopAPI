@@ -7,12 +7,12 @@ using ZooWebShopAPI.Entities;
 
 namespace ZooWebShopAPI.Models
 {
-    public class ProductDto
+    public class ProductModel
     {
         public string Name { get; set; } = string.Empty;
         public decimal OriginalPrice { get; set; }
         public decimal Price { get; set; }
-        public List<PhotoDto> Photos { get; set; }
+        public List<PhotoModel> Photos { get; set; }
         public int MainPhotoId { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
     }

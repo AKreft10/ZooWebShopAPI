@@ -27,7 +27,6 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 
             var categoryResult = new AddCategoryDto()
             {
-                Id = category.Id,
                 Name = category.Name
             };
 

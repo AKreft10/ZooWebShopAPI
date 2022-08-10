@@ -13,5 +13,6 @@ namespace ZooWebShopAPI.Entities
         public string PhotoUrl { get; set; } = string.Empty;
         [JsonIgnore]
         public Product Product { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now; 
     }
 }

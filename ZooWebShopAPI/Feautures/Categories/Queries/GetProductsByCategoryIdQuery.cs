@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Entities;
 
-namespace ZooWebShopAPI.Feautures.Products.Commands
+namespace ZooWebShopAPI.Feautures.Categories.Queries
 {
-    public record AddNewProductCommand(string firstName, decimal price) : IRequest<Product>;
-
+    public record GetProductsByCategoryIdQuery(int id) : IRequest<List<Product>>;
 }

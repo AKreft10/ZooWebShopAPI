@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Categories.Commands;
 using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {
-    public class AddNewCategoryHandler : IRequestHandler<AddNewCategoryCommand, CategoryDto>
+    public class AddNewCategoryHandler : IRequestHandler<AddNewCategoryCommand, AddCategoryDto>
     {
         private readonly IDataAccess _dataAccess;
 
@@ -15,7 +16,7 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
             _dataAccess = dataAccess;
         }
 
-        public async Task<CategoryDto> Handle(AddNewCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<AddCategoryDto> Handle(AddNewCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = new Category()
             {
@@ -24,7 +25,7 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 
             await _dataAccess.AddNewCategory(category);
 
-            var categoryResult = new CategoryDto()
+            var categoryResult = new AddCategoryDto()
             {
                 Id = category.Id,
                 Name = category.Name

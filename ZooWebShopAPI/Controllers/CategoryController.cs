@@ -24,8 +24,8 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewCategory([FromBody]string category)
         {
-            var result = await _mediator.Send(new AddNewCategoryCommand(category));
-            return Ok(result);
+            await _mediator.Send(new AddNewCategoryCommand(category));
+            return Ok();
         }
 
         [HttpGet("id/{categoryId}")]

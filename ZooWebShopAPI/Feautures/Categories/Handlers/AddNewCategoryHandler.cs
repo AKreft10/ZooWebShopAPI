@@ -7,7 +7,7 @@ using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {
-    public class AddNewCategoryHandler : IRequestHandler<AddNewCategoryCommand, AddCategoryDto>
+    public class AddNewCategoryHandler : IRequestHandler<AddNewCategoryCommand>
     {
         private readonly IDataAccess _dataAccess;
 
@@ -16,7 +16,7 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
             _dataAccess = dataAccess;
         }
 
-        public async Task<AddCategoryDto> Handle(AddNewCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddNewCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = new Category()
             {
@@ -25,12 +25,8 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 
             await _dataAccess.AddNewCategory(category);
 
-            var categoryResult = new AddCategoryDto()
-            {
-                Name = category.Name
-            };
 
-            return await Task.FromResult(categoryResult);
+            return await Task.FromResult(Unit.Value);
         }
     }
 }

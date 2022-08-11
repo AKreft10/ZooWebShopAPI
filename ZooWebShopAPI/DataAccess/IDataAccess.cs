@@ -14,5 +14,7 @@ namespace ZooWebShopAPI.DataAccess
         bool CheckIfCategoryArleadyExist(string categoryName);
         Task DeleteProduct(int id);
         Task EditProduct(EditProductDto dto);
+        Task RegisterUser(User dto);
+        bool CheckIfEmailArleadyExist(string email);
     }
 }

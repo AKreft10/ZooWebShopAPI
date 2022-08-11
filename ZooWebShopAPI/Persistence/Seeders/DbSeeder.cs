@@ -25,6 +25,13 @@ namespace ZooWebShopAPI.Persistence.Seeders
                 await _context.Products.AddRangeAsync(products);
                 await _context.SaveChangesAsync();
             }
+
+            if(!_context.Roles.Any())
+            {
+                var roles = GetRoles();
+                await _context.Roles.AddRangeAsync(roles);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private List<Product> GetProducts()
@@ -138,6 +145,22 @@ namespace ZooWebShopAPI.Persistence.Seeders
 
             };
             return products;
+        }
+        private List<Role> GetRoles()
+        {
+            var roles = new List<Role>()
+            {
+                new Role()
+                {
+                    Name = "User"
+                },
+                new Role()
+                {
+                    Name = "Admin"
+                }
+            };
+
+            return roles;
         }
     }
 }

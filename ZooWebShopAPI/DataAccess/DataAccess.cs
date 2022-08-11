@@ -81,4 +81,16 @@ public class DataAccess : IDataAccess
             return false;
         }
     }
+
+    public async Task DeleteProduct(int id)
+    {
+        var productTodelete = await _context
+            .Products
+            .FirstOrDefaultAsync(z => z.Id == id);
+
+        if(productTodelete != null)
+
+        _context.Products.Remove(productTodelete);
+        await _context.SaveChangesAsync();
+    }
 }

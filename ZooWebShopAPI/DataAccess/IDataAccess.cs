@@ -11,5 +11,6 @@ namespace ZooWebShopAPI.DataAccess
         Task<List<Product>> GetProductsByCategoryName(string name);
         Task AddNewProduct(Product productToAdd);
         bool CheckIfCategoryArleadyExist(string categoryName);
+        Task DeleteProduct(int id);
     }
 }

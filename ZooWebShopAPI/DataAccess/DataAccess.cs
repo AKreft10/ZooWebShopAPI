@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
+using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.DataAccess;
@@ -92,5 +94,30 @@ public class DataAccess : IDataAccess
 
         _context.Products.Remove(productTodelete);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task EditProduct(EditProductDto dto)
+    {
+        var productToEdit = await _context
+            .Products
+            .FirstOrDefaultAsync(z => z.Id == dto.Id);
+
+        if (productToEdit == null)
+            throw new NotFoundException("Product not found");
+
+        productToEdit.Name = dto.Name;
+        productToEdit.OriginalPrice = dto.OriginalPrice;
+        productToEdit.Price = dto.Price;
+        productToEdit.Photos = dto.Photos.Select(z => new Photo
+        {
+            PhotoUrl = z.PhotoUrl
+        }).ToList();
+            productToEdit.ProductCategories = dto.ProductCategories.Select(z => new ProductCategory()
+            {
+                CategoryId = z.CategoryId
+            }).ToList();
+
+        await _context.SaveChangesAsync();
+
     }
 }

@@ -43,6 +43,13 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> DeleteProductById([FromRoute]int id)
     {
         await _mediator.Send(new DeleteProductByIdCommand(id));
+        return NoContent();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditProduct([FromBody]EditProductDto dto)
+    {
+        await _mediator.Send(new EditProductCommand(dto));
         return Ok();
     }
 

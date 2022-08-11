@@ -9,12 +9,12 @@ using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Validators
 {
-    public class AddCategoryValidator : AbstractValidator<AddCategoryDto>
+    public class AddCategoryByNameValidator : AbstractValidator<AddCategoryByNameDto>
     {
-        public AddCategoryValidator(IDataAccess dataAccess)
+        public AddCategoryByNameValidator(IDataAccess dataAccess)
         {
             RuleFor(x => x.Name)
-                .Custom(async (value, context) =>
+                .Custom((value, context) =>
                 {
                     var categoryNameInUse = dataAccess.CheckIfCategoryArleadyExist(value);
 

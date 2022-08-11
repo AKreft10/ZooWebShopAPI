@@ -21,7 +21,7 @@ builder.Services.AddScoped<IDataAccess, DataAccess>();
 builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ExceptionHandler>();
-builder.Services.AddScoped<IValidator<AddCategoryDto>, AddCategoryValidator>();
+builder.Services.AddScoped<IValidator<AddCategoryByNameDto>, AddCategoryByNameValidator>();
 
 var app = builder.Build();
 

@@ -19,7 +19,7 @@ namespace ZooWebShopAPI.Dtos
         public decimal OriginalPrice { get; set; }
         [Column(TypeName = "decimal(18,6)")]
         public decimal Price { get; set; }
-        public List<Photo> Photos { get; set; }
+        public List<AddPhotoDto> Photos { get; set; }
         public int MainPhotoId { get; set; } = 1;
         public List<AddNewCategoryDto> ProductCategories { get; set; }
     }

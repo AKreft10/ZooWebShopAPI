@@ -3,5 +3,5 @@ using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Feautures.Categories.Commands
 {
-    public record AddNewCategoryCommand(string name) : IRequest;
+    public record AddNewCategoryCommand(AddCategoryByNameDto dto) : IRequest;
 }

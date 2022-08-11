@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Categories.Commands;
 using ZooWebShopAPI.Feautures.Categories.Queries;
 
@@ -22,9 +23,9 @@ namespace ZooWebShopAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewCategory([FromBody]string category)
+        public async Task<IActionResult> AddNewCategory([FromBody] AddCategoryByNameDto dto)
         {
-            await _mediator.Send(new AddNewCategoryCommand(category));
+            await _mediator.Send(new AddNewCategoryCommand(dto));
             return Ok();
         }
 

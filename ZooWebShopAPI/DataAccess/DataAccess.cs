@@ -69,4 +69,16 @@ public class DataAccess : IDataAccess
         await _context.Products.AddAsync(productToAdd);
         await _context.SaveChangesAsync();
     }
+
+    public bool CheckIfCategoryArleadyExist(string categoryName)
+    {
+        if (_context.Categories.Any(z => z.Name == categoryName))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

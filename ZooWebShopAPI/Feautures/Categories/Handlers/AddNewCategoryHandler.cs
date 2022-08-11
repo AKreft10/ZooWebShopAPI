@@ -20,12 +20,10 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
         {
             var category = new Category()
             {
-                Name = request.name
+                Name = request.dto.Name
             };
 
             await _dataAccess.AddNewCategory(category);
-
-
             return await Task.FromResult(Unit.Value);
         }
     }

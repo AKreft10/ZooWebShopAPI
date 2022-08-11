@@ -120,4 +120,21 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
 
     }
+    public async Task RegisterUser(User dto)
+    {
+        await _context.Users.AddAsync(dto);
+        await _context.SaveChangesAsync();
+    }
+
+    public bool CheckIfEmailArleadyExist(string email)
+    {
+        if (_context.Users.Any(z => z.Email == email))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

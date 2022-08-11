@@ -22,6 +22,7 @@ builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddScoped<ExceptionHandler>();
 builder.Services.AddScoped<IValidator<AddCategoryByNameDto>, AddCategoryByNameValidator>();
+builder.Services.AddScoped<IValidator<EditProductDto>, EditProductValidator>();
 
 var app = builder.Build();
 

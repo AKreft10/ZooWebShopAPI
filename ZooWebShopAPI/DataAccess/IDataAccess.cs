@@ -1,4 +1,5 @@
-﻿using ZooWebShopAPI.Entities;
+﻿using ZooWebShopAPI.Dtos;
+using ZooWebShopAPI.Entities;
 
 namespace ZooWebShopAPI.DataAccess
 {
@@ -11,5 +12,7 @@ namespace ZooWebShopAPI.DataAccess
         Task<List<Product>> GetProductsByCategoryName(string name);
         Task AddNewProduct(Product productToAdd);
         bool CheckIfCategoryArleadyExist(string categoryName);
+        Task DeleteProduct(int id);
+        Task EditProduct(EditProductDto dto);
     }
 }

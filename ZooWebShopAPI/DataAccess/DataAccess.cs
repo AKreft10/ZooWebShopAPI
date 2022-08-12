@@ -15,13 +15,16 @@ public class DataAccess : IDataAccess
         _context = context;
     }
 
-    public async Task<List<Product>> GetAllProducts()
+    public async Task<List<Product>> GetAllProducts(PaginationParameters parameters)
     {
-        var result = await _context
+        var baseResult = await _context
             .Products
+            .Include(z => z.Photos)
+            .Include(x => x.ProductCategories)
+            .ThenInclude(c => c.Category)
             .ToListAsync();
 
-        return result;
+        return await Task.FromResult(baseResult);
     }
 
     public async Task<Product?> GetProductById(int id)

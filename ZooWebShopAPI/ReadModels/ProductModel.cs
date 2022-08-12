@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Entities;
+using ZooWebShopAPI.ReadModels;
 
 namespace ZooWebShopAPI.Models
 {
@@ -14,6 +15,6 @@ namespace ZooWebShopAPI.Models
         public decimal Price { get; set; }
         public List<PhotoModel> Photos { get; set; }
         public int MainPhotoId { get; set; }
-        public List<ProductCategory> ProductCategories { get; set; }
+        public List<CategoryModel> ProductCategories { get; set; }
     }
 }

@@ -21,10 +21,10 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<Product>> GetTestResult()
+    public async Task<IActionResult> GetProductList([FromQuery]PaginationParameters parameters)
     {
-        var result = await _mediator.Send(new GetAllProductsQuery());
-        return result;
+        var result = await _mediator.Send(new GetAllProductsQuery(parameters));
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

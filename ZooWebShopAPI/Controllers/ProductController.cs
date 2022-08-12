@@ -21,10 +21,10 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<List<Product>> GetTestResult()
+    public async Task<IActionResult> GetProductList()
     {
         var result = await _mediator.Send(new GetAllProductsQuery());
-        return result;
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

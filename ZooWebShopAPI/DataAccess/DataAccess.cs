@@ -20,6 +20,8 @@ public class DataAccess : IDataAccess
         var result = await _context
             .Products
             .Include(z => z.Photos)
+            .Include(x => x.ProductCategories)
+            .ThenInclude(c => c.Category)
             .ToListAsync();
 
         return result;

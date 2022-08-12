@@ -137,4 +137,17 @@ public class DataAccess : IDataAccess
             return false;
         }
     }
+
+    public async Task<User> GetUserByGivenLoginCredentials(LoginUserDto userDto)
+    {
+        var user = await _context
+            .Users
+            .Include(z => z.Role)
+            .FirstOrDefaultAsync(z => z.Email == userDto.Email);
+
+        if (user is null)
+            throw new BadRequestException("Invalid username or password");
+
+        return await Task.FromResult(user);
+    }
 }

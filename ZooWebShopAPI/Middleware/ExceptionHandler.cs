@@ -15,10 +15,15 @@ namespace ZooWebShopAPI.Middleware
             {
                 await next.Invoke(context);
             }
-            catch (NotFoundException e)
+            catch(BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(e.Message);
+                await context.Response.WriteAsync(notFoundException.Message);
             }
             catch (Exception)
             {

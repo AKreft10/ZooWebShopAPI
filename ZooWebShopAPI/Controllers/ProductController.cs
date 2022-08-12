@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
@@ -9,6 +10,7 @@ namespace ZooWebShopAPI.Controllers;
 
 [ApiController]
 [Route("product")]
+[Authorize]
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;

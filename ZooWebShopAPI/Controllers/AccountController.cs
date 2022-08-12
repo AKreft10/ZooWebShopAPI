@@ -22,5 +22,12 @@ namespace ZooWebShopAPI.Controllers
             await _mediator.Send(new RegisterNewUserCommand(dto));
             return Ok();
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
+        {
+            string token = await _mediator.Send(new LoginUserCommand(dto));
+            return Ok(token);
+        }
     }
 }

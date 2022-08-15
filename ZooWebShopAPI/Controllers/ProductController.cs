@@ -10,7 +10,6 @@ namespace ZooWebShopAPI.Controllers;
 
 [ApiController]
 [Route("product")]
-[Authorize]
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;

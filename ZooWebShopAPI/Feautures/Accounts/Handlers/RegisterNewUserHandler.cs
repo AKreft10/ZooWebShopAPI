@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
+using ZooWebShopAPI.Feautures.Emails.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
@@ -15,11 +16,13 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
     {
         private readonly IDataAccess _dataAccess;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IMediator _mediator;
 
-        public RegisterNewUserHandler(IDataAccess dataAccess, IPasswordHasher<User> passwordHasher)
+        public RegisterNewUserHandler(IDataAccess dataAccess, IPasswordHasher<User> passwordHasher, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _passwordHasher = passwordHasher;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
@@ -41,6 +44,9 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             newUser.PasswordHash = hashedPassword;
 
             await _dataAccess.RegisterUser(newUser);
+
+            await _mediator.Send(new SendActivationEmailCommand());
+
             return await Task.FromResult(Unit.Value);
         }
     }

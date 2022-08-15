@@ -1,3 +1,4 @@
+using FluentEmail.MailKitSmtp;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -14,6 +15,16 @@ using ZooWebShopAPI.Persistence.Seeders;
 using ZooWebShopAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var emailConfiguration = new EmailConfigurationDto()
+{
+    EmailFrom = builder.Configuration.GetSection("GmailEmailService")["From"],
+    EmailSender = builder.Configuration.GetSection("GmailEmailService")["EmailAddress"],
+    EmailPassword = builder.Configuration.GetSection("GmailEmailService")["Password"],
+    EmailPort = int.Parse(builder.Configuration.GetSection("GmailEmailService")["Port"]),
+    EmailServer = builder.Configuration.GetSection("GmailEmailService")["Server"],
+};
 
 var authenticationSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
@@ -48,14 +59,30 @@ builder.Services.AddScoped<IValidator<EditProductDto>, EditProductValidator>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>,RegisterUserDtoValidator>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+builder.Services.AddFluentEmail(emailConfiguration.EmailSender, emailConfiguration.EmailFrom)
+    .AddRazorRenderer()
+    .AddMailKitSender(new SmtpClientOptions
+    {
+        Server = emailConfiguration.EmailServer,
+        Port = emailConfiguration.EmailPort,
+        UseSsl = true,
+        RequiresAuthentication = true,
+        User = emailConfiguration.EmailSender,
+        Password = emailConfiguration.EmailPassword
+    });
+
 
 var app = builder.Build();
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(z =>
+    {
+        z.InjectStylesheet("/SwaggerDarkUI/darkui.css");
+    });
 }
 
 var scope = app.Services.CreateScope();

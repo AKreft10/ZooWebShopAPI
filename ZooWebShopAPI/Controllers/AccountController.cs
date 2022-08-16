@@ -29,5 +29,12 @@ namespace ZooWebShopAPI.Controllers
             string token = await _mediator.Send(new LoginUserCommand(dto));
             return Ok(token);
         }
+
+        [HttpPost("activate")]
+        public async Task<IActionResult> ActivateAccount([FromQuery]ActivationEmailDto dto)
+        {
+            await _mediator.Send(new ActivateAccountCommand(dto));
+            return Ok("Account has been activated!");
+        }
     }
 }

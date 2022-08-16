@@ -153,4 +153,20 @@ public class DataAccess : IDataAccess
 
         return await Task.FromResult(user);
     }
+
+    public async Task ActivateAccountIfExist(ActivationEmailDto dto)
+    {
+        var user = await _context
+            .Users
+            .FirstOrDefaultAsync(z => z.Email == dto.Email);
+
+        if (user is null || user.ActivationToken != dto.ActivationToken)
+            throw new NotFoundException("User not found or invalid token.");
+
+        user.ActivationToken = null;
+        user.ActivationTime = DateTime.Now;
+
+        await _context.SaveChangesAsync();
+    }
+
 }

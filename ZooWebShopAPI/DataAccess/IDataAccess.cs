@@ -17,5 +17,6 @@ namespace ZooWebShopAPI.DataAccess
         Task RegisterUser(User dto);
         bool CheckIfEmailArleadyExist(string email);
         Task<User> GetUserByGivenLoginCredentials(LoginUserDto userDto);
+        Task ActivateAccountIfExist(ActivationEmailDto dto);
     }
 }

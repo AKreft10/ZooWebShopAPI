@@ -29,5 +29,26 @@ namespace ZooWebShopAPI.Controllers
             string token = await _mediator.Send(new LoginUserCommand(dto));
             return Ok(token);
         }
+
+        [HttpPost("activate")]
+        public async Task<IActionResult> ActivateAccount([FromQuery]ActivationEmailDto dto)
+        {
+            await _mediator.Send(new ActivateAccountCommand(dto));
+            return Ok("Account has been activated!");
+        }
+
+        [HttpPost("forget-password")]
+        public async Task<IActionResult> SendResetEmail([FromQuery]string email)
+        {
+            await _mediator.Send(new SetResetPasswordToken(email));
+            return Ok("A link to reset password has been sent to your email address");
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody]CreateNewPasswordDto dto)
+        {
+            await _mediator.Send(new ResetPasswordCommand(dto));
+            return Ok("Your password has been reset successfully!");
+        }
     }
 }

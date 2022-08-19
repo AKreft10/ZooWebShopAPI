@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220816130624_NullableUserEntities")]
+    partial class NullableUserEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,61 +47,61 @@ namespace ZooWebShopAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(76),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2883),
                             Name = "Dog food"
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(123),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2944),
                             Name = "Cat food"
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(126),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2950),
                             Name = "Rabbit food"
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(129),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2955),
                             Name = "Bird food"
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(132),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2960),
                             Name = "Fish food"
                         },
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(134),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2965),
                             Name = "Dog toys"
                         },
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(137),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2970),
                             Name = "Cat toys"
                         },
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(140),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2975),
                             Name = "Rabbit cages"
                         },
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(142),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2979),
                             Name = "Transport"
                         },
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2022, 8, 16, 20, 15, 54, 52, DateTimeKind.Local).AddTicks(145),
+                            Created = new DateTime(2022, 8, 16, 15, 6, 23, 886, DateTimeKind.Local).AddTicks(2984),
                             Name = "Bird cage"
                         });
                 });

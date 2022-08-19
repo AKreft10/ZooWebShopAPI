@@ -21,5 +21,9 @@ namespace ZooWebShopAPI.Entities
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
         public DateTime AccountCreated { get; set; } = DateTime.Now;
+        public string? ActivationToken { get; set; }
+        public DateTime? ActivationTime { get; set; }
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordTokenExpires { get; set; }
     }
 }

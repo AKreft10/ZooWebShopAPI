@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZooWebShopAPI.Dtos
 {
-    public class ActivationEmailDto
+    public class ResetPasswordDto
     {
         public string Email { get; set; } = string.Empty;
-        public string ActivationToken { get; set; } = string.Empty;
-
+        public string ResetToken { get; set; } = string.Empty;
     }
 }

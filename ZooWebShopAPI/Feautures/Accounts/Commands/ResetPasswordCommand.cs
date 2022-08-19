@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 
-namespace ZooWebShopAPI.Feautures.Emails.Commands
+namespace ZooWebShopAPI.Feautures.Accounts.Commands
 {
-    public record SendActivationEmailCommand(ActivationEmailDto dto) : IRequest;
+    public record ResetPasswordCommand(CreateNewPasswordDto dto) : IRequest;
 }

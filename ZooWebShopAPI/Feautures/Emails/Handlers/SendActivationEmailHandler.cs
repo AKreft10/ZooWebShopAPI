@@ -20,22 +20,18 @@ namespace ZooWebShopAPI.Feautures.Emails.Handlers
 
         public async Task<Unit> Handle(SendActivationEmailCommand request, CancellationToken cancellationToken)
         {
-            var activateLink = "dasdsad";
+            var activationLink = GenerateActivationLink(request.dto.Email, request.dto.ActivationToken);
 
             var emailToSend = await _fluentEmail
                 .Create()
-                .To("xd.kenzi@gmail.com")
-                .Subject("test subject")
-                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/wwwroot/EmailTemplates/AccountActivationEmail.cshtml", new {activateLink})
+                .To(request.dto.Email)
+                .Subject("Activate your ZooShop account!")
+                .UsingTemplateFromFile($"{Directory.GetCurrentDirectory()}/wwwroot/EmailTemplates/AccountActivationEmail.cshtml", new {activationLink})
                 .SendAsync();
-
-            Console.WriteLine(emailToSend.Successful);
-            var errors = emailToSend.ErrorMessages;
-
-            foreach (var item in errors)
-                Console.WriteLine(item);
 
             return await Task.FromResult(Unit.Value);
         }
+
+        private string GenerateActivationLink(string email, string token) => $"https://localhost:7280/account/activate?email={email}&ActivationToken={token}";
     }
 }

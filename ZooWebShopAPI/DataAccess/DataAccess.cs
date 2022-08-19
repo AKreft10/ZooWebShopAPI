@@ -153,4 +153,66 @@ public class DataAccess : IDataAccess
 
         return await Task.FromResult(user);
     }
+
+    public async Task ActivateAccountIfExist(ActivationEmailDto dto)
+    {
+        var user = await _context
+            .Users
+            .FirstOrDefaultAsync(z => z.Email == dto.Email);
+
+        if (user is null || user.ActivationToken != dto.ActivationToken)
+            throw new NotFoundException("User not found or invalid token.");
+
+        user.ActivationToken = null;
+        user.ActivationTime = DateTime.Now;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ResetPasswordSetToken(ResetPasswordDto dto)
+    {
+        var user = await _context
+            .Users
+            .FirstOrDefaultAsync(z => z.Email == dto.Email);
+
+        if (user is null)
+            throw new NotFoundException("User not found");
+
+        user.ResetPasswordToken = dto.ResetToken;
+        user.ResetPasswordTokenExpires = DateTime.Now.AddHours(3);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ChangeUserPassword(NewUserPasswordDto dto)
+    {
+        var user = await _context
+            .Users
+            .FirstOrDefaultAsync(x => x.Email == dto.Email);
+
+        if (user is null || user.ResetPasswordToken != dto.Token)
+            throw new NotFoundException("User not found");
+
+        if (user.ResetPasswordTokenExpires < DateTime.Now)
+            throw new Exception("Token expired");
+
+        user.ResetPasswordToken = null;
+        user.ResetPasswordTokenExpires = null;
+        user.PasswordHash = dto.NewPasswordHash;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<User> GetUserByEmailAddress(string email)
+    {
+        var user = await _context
+            .Users
+            .FirstOrDefaultAsync(z => z.Email == email);
+
+        if (user is null)
+            throw new NotFoundException("User not found");
+
+        return await Task.FromResult(user);
+    }
+
 }

@@ -45,8 +45,6 @@ namespace ZooWebShopAPI.Handlers
                 }).ToList(),
             };
 
-            await _mediator.Send(new SendActivationEmailCommand());
-
             return resultProduct;
         }
     }

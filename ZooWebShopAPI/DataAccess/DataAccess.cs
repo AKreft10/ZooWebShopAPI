@@ -215,4 +215,36 @@ public class DataAccess : IDataAccess
         return await Task.FromResult(user);
     }
 
+    public async Task AddProductToUsersCart(CartItem product, int? userId)
+    {
+        var user = await _context
+            .Users
+            .Include(x => x.CartProducts)
+            .FirstOrDefaultAsync(z => z.Id == userId);
+
+        if(user is null)
+            throw new NotFoundException("User not found");
+
+        if(user.CartProducts.Any(z => z.ProductId == product.ProductId))
+        {
+            user.CartProducts.SingleOrDefault(x => x.ProductId == product.ProductId).Quantity += product.Quantity;
+        }
+        else
+        {
+            user.CartProducts.Add(product);
+        }
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<CartItem>> GetUsersCartItems(int? userId)
+    {
+        var products = await _context
+            .CartProducts
+            .Include(z => z.Product)
+            .Where(z => z.User.Id == userId)
+            .ToListAsync();
+
+        return products;
+    }
+
 }

@@ -42,7 +42,7 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
                 PostalCode = request.dto.PostalCode,
                 PhoneNumber = request.dto.PhoneNumber,
                 RoleId = request.dto.RoleId,
-                ActivationToken = randomActivationToken,
+                ActivationToken = randomActivationToken
             };
 
             var hashedPassword = _passwordHasher.HashPassword(newUser, request.dto.Password);

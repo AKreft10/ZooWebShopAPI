@@ -23,7 +23,7 @@ namespace ZooWebShopAPI.Persistence.DbContexts
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-
+        public DbSet<CartItem> CartProducts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -50,59 +50,6 @@ namespace ZooWebShopAPI.Persistence.DbContexts
                 .HasOne(pc => pc.Category)
                 .WithMany(p => p.ProductCategories)
                 .HasForeignKey(pc => pc.CategoryId);
-
-            modelBuilder.Entity<Category>()
-                .HasData(
-                new Category()
-                {
-                    Id = 1,
-                    Name = "Dog food"
-                },
-                new Category()
-                {
-                    Id = 2,
-                    Name = "Cat food"
-                },
-                new Category()
-                {
-                    Id = 3,
-                    Name = "Rabbit food"
-                },
-                new Category()
-                {
-                    Id = 4,
-                    Name = "Bird food"
-                },
-                new Category()
-                {
-                    Id = 5,
-                    Name = "Fish food"
-                },
-                new Category()
-                {
-                    Id = 6,
-                    Name = "Dog toys"
-                },
-                new Category()
-                {
-                    Id = 7,
-                    Name = "Cat toys"
-                },
-                new Category()
-                {
-                    Id = 8,
-                    Name = "Rabbit cages"
-                },
-                new Category()
-                {
-                    Id = 9,
-                    Name = "Transport"
-                },
-                new Category()
-                {
-                    Id = 10,
-                    Name = "Bird cage"
-                });
 
         }
 

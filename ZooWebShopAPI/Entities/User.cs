@@ -25,5 +25,6 @@ namespace ZooWebShopAPI.Entities
         public DateTime? ActivationTime { get; set; }
         public string? ResetPasswordToken { get; set; }
         public DateTime? ResetPasswordTokenExpires { get; set; }
+        public List<CartItem> CartProducts { get; set; }
     }
 }

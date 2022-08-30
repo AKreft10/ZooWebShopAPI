@@ -53,6 +53,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IDataAccess, DataAccess>();
 builder.Services.AddMediatR(typeof(Program).Assembly);
 builder.Services.AddScoped<DbSeeder>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ExceptionHandler>();
 builder.Services.AddScoped<IValidator<AddCategoryByNameDto>, AddCategoryByNameValidator>();
 builder.Services.AddScoped<IValidator<EditProductDto>, EditProductValidator>();

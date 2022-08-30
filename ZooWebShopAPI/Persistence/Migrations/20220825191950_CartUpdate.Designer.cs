@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220825191950_CartUpdate")]
+    partial class CartUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace ZooWebShopAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ZooWebShopAPI.Entities.CartItem", b =>
+            modelBuilder.Entity("ZooWebShopAPI.Entities.CartProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,10 +35,10 @@ namespace ZooWebShopAPI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -66,6 +68,68 @@ namespace ZooWebShopAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9580),
+                            Name = "Dog food"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9623),
+                            Name = "Cat food"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9626),
+                            Name = "Rabbit food"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9629),
+                            Name = "Bird food"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9632),
+                            Name = "Fish food"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9635),
+                            Name = "Dog toys"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9638),
+                            Name = "Cat toys"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9705),
+                            Name = "Rabbit cages"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9711),
+                            Name = "Transport"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Created = new DateTime(2022, 8, 25, 21, 19, 50, 38, DateTimeKind.Local).AddTicks(9714),
+                            Name = "Bird cage"
+                        });
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>
@@ -222,7 +286,7 @@ namespace ZooWebShopAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ZooWebShopAPI.Entities.CartItem", b =>
+            modelBuilder.Entity("ZooWebShopAPI.Entities.CartProduct", b =>
                 {
                     b.HasOne("ZooWebShopAPI.Entities.Product", "Product")
                         .WithMany()
@@ -230,15 +294,11 @@ namespace ZooWebShopAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZooWebShopAPI.Entities.User", "User")
+                    b.HasOne("ZooWebShopAPI.Entities.User", null)
                         .WithMany("CartProducts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>

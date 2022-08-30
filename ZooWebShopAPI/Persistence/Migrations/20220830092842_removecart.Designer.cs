@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220830092842_removecart")]
+    partial class removecart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +23,6 @@ namespace ZooWebShopAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ZooWebShopAPI.Entities.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CartProducts");
-                });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Category", b =>
                 {
@@ -66,6 +42,68 @@ namespace ZooWebShopAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(506),
+                            Name = "Dog food"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(548),
+                            Name = "Cat food"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(552),
+                            Name = "Rabbit food"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(554),
+                            Name = "Bird food"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(557),
+                            Name = "Fish food"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(560),
+                            Name = "Dog toys"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(563),
+                            Name = "Cat toys"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(566),
+                            Name = "Rabbit cages"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(569),
+                            Name = "Transport"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Created = new DateTime(2022, 8, 30, 11, 28, 41, 701, DateTimeKind.Local).AddTicks(572),
+                            Name = "Bird cage"
+                        });
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>
@@ -222,25 +260,6 @@ namespace ZooWebShopAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ZooWebShopAPI.Entities.CartItem", b =>
-                {
-                    b.HasOne("ZooWebShopAPI.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZooWebShopAPI.Entities.User", "User")
-                        .WithMany("CartProducts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>
                 {
                     b.HasOne("ZooWebShopAPI.Entities.Product", "Product")
@@ -292,11 +311,6 @@ namespace ZooWebShopAPI.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("ProductCategories");
-                });
-
-            modelBuilder.Entity("ZooWebShopAPI.Entities.User", b =>
-                {
-                    b.Navigation("CartProducts");
                 });
 #pragma warning restore 612, 618
         }

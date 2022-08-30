@@ -32,6 +32,13 @@ namespace ZooWebShopAPI.Persistence.Seeders
                 await _context.Roles.AddRangeAsync(roles);
                 await _context.SaveChangesAsync();
             }
+
+            if(!_context.Categories.Any())
+            {
+                var categories = GetCategories();
+                await _context.Categories.AddRangeAsync(categories);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private List<Product> GetProducts()
@@ -161,6 +168,53 @@ namespace ZooWebShopAPI.Persistence.Seeders
             };
 
             return roles;
+        }
+        private List<Category> GetCategories()
+        {
+            var categories = new List<Category>()
+            {
+                new Category()
+                {
+                    Name = "Dog food"
+                },
+                new Category()
+                {
+                    Name = "Cat food"
+                },
+                new Category()
+                {
+                    Name = "Rabbit food"
+                },
+                new Category()
+                {
+                    Name = "Bird food"
+                },
+                new Category()
+                {
+                    Name = "Fish food"
+                },
+                new Category()
+                {
+                    Name = "Dog toys"
+                },
+                new Category()
+                {
+                    Name = "Cat toys"
+                },
+                new Category()
+                {
+                    Name = "Rabbit cages"
+                },
+                new Category()
+                {
+                    Name = "Transport"
+                },
+                new Category()
+                {
+                    Name = "Bird cage"
+                }
+            };
+            return categories;
         }
     }
 }

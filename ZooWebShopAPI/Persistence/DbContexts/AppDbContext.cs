@@ -24,6 +24,8 @@ namespace ZooWebShopAPI.Persistence.DbContexts
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<CartItem> CartProducts { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

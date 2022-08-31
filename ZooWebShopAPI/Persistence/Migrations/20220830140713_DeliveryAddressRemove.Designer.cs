@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220830140713_DeliveryAddressRemove")]
+    partial class DeliveryAddressRemove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,10 +117,7 @@ namespace ZooWebShopAPI.Migrations
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("PaidFor")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -315,15 +314,11 @@ namespace ZooWebShopAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZooWebShopAPI.Entities.User", "User")
+                    b.HasOne("ZooWebShopAPI.Entities.User", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("DeliveryAddress");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>

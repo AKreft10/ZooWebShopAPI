@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Carts.Queries;
+using ZooWebShopAPI.UserContext.Commands;
 
 namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
@@ -15,17 +16,17 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
     {
         private readonly IDataAccess _dataAccess;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly IMediator _mediator;
 
-        public GetCartItemsHandler(IDataAccess dataAccess, IHttpContextAccessor httpContext)
+        public GetCartItemsHandler(IDataAccess dataAccess, IHttpContextAccessor httpContext, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _httpContext = httpContext;
+            _mediator = mediator;
         }
         public async Task<List<CartItem>> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
         {
-            var user = _httpContext.HttpContext.User;
-            int? userId = user is null ? null : (int?)int.Parse(user.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
+            var userId = await _mediator.Send(new GetUserIdCommand());
             var items = await _dataAccess.GetUsersCartItems(userId);
             return items;
         }

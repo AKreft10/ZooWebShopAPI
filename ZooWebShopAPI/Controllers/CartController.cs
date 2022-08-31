@@ -45,5 +45,21 @@ namespace ZooWebShopAPI.Controllers
             await _mediator.Send(new AddProductToCartCommand(dto));
             return Ok();
         }
+
+        [HttpPost]
+        [Route("cart-submit")]
+        public async Task<IActionResult> CreateNewOrder([FromBody]DeliveryAddressDto? dto)
+        {
+            await _mediator.Send(new CreateNewOrderCommand(dto));
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("pay-for-order/{id}")]
+        public async Task<IActionResult> PayForOrder([FromRoute]int id)
+        {
+            await _mediator.Send(new PayForOrderCommand(id));
+            return Ok(); //temporary 'solution'
+        }
     }
 }

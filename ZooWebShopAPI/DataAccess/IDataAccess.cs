@@ -23,5 +23,7 @@ namespace ZooWebShopAPI.DataAccess
         Task ChangeUserPassword(NewUserPasswordDto dto);
         Task AddProductToUsersCart(CartItem product, int? userId);
         Task<List<CartItem>> GetUsersCartItems(int? userId);
+        Task AddNewOrder(Order order, int? userId);
+        Task PayForOrder(int orderId, int? userId);
     }
 }

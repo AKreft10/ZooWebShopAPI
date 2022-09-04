@@ -59,7 +59,7 @@ namespace ZooWebShopAPI.Controllers
         public async Task<IActionResult> PayForOrder([FromRoute]int id)
         {
             await _mediator.Send(new PayForOrderCommand(id));
-            return Ok(); //temporary 'solution'
+            return Ok("Payment succeeded. Invoice has been sent on your email address."); //temporary 'solution'
         }
     }
 }

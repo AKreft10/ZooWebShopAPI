@@ -226,7 +226,30 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
-    private async Task<User> GetUserById(int? id)
+    public async Task AddInvoiceUrlToOrder(int orderId, int? userId, string? invoiceUrl)
+    {
+        var user = await GetUserById(userId);
+        var order = await GetOrderById(user, orderId);
+
+        if (order == null)
+            throw new NotFoundException("OrderNotFound");
+
+        order.InvoiceUrl = invoiceUrl;
+        await _context.SaveChangesAsync();
+    }
+
+    private async Task<Order?> GetOrderById(User user, int orderId)
+    {
+        var order = user
+            .Orders
+            .FirstOrDefault(x => x.Id == orderId);
+
+        if (order == null)
+            throw new NotFoundException("Order not found");
+
+        return order;
+    }
+    public async Task<User> GetUserById(int? id)
     {
         var user = await _context
             .Users

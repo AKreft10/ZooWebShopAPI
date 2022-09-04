@@ -18,5 +18,6 @@ namespace ZooWebShopAPI.Entities
         public bool PaidFor { get; set; } = false;
         public int UserId { get; set; }
         public User User { get; set; }
+        public string InvoiceUrl { get; set; } = string.Empty;
     }
 }

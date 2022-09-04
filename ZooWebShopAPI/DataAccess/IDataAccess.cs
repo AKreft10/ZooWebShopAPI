@@ -27,5 +27,6 @@ namespace ZooWebShopAPI.DataAccess
         Task PayForOrder(int orderId, int? userId);
         Task AddInvoiceUrlToOrder(int orderId, int? userId, string? invoiceUrl);
         Task<User> GetUserById(int? id);
+        Task EmptyUsersCart(int? id);
     }
 }

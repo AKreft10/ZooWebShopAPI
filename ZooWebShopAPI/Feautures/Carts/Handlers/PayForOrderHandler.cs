@@ -28,7 +28,14 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
             var userId = await _mediator.Send(new GetUserIdCommand());
             await _dataAccess.PayForOrder(request.id, userId);
 
-            var invoice = await _mediator.Send(new GenerateInvoiceCommand(new InvoiceDataDto()));
+            var invoiceData = new InvoiceDataDto()
+            {
+                User = await _dataAccess.GetUserById(userId),
+                Products = await _dataAccess.GetUsersCartItems(userId)
+            };
+
+
+            var invoice = await _mediator.Send(new GenerateInvoiceCommand(invoiceData));
             var invoiceUrl = await _mediator.Send(new UploadInvoiceCommand(invoice));
 
             await _dataAccess.AddInvoiceUrlToOrder(request.id, userId, invoiceUrl);

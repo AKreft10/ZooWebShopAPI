@@ -26,6 +26,8 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
         {
             var userId = await _mediator.Send(new GetUserIdCommand());
             var cartItems = await _dataAccess.GetUsersCartItems(userId);
+            await _dataAccess.EmptyUsersCart(userId);
+
             decimal finalPrice = 0;
 
             foreach (var item in cartItems)

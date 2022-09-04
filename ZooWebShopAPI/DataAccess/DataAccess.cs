@@ -238,6 +238,13 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
+    public async Task EmptyUsersCart(int? id)
+    {
+        var user = await GetUserById(id);
+        user.CartProducts.Clear();
+        await _context.SaveChangesAsync();
+    }
+
     private async Task<Order?> GetOrderById(User user, int orderId)
     {
         var order = user
@@ -262,6 +269,8 @@ public class DataAccess : IDataAccess
 
         return user;
     }
+
+
 
     private async Task<User> GetUserByEmail(string email)
     {

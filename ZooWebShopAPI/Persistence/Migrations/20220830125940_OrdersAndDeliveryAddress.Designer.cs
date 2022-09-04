@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220830125940_OrdersAndDeliveryAddress")]
+    partial class OrdersAndDeliveryAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,12 @@ namespace ZooWebShopAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("DeliveryAddresses");
                 });
@@ -112,17 +119,10 @@ namespace ZooWebShopAPI.Migrations
                     b.Property<decimal>("FinalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("InvoiceUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("PaidFor")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -311,6 +311,17 @@ namespace ZooWebShopAPI.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ZooWebShopAPI.Entities.DeliveryAddress", b =>
+                {
+                    b.HasOne("ZooWebShopAPI.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ZooWebShopAPI.Entities.Order", b =>
                 {
                     b.HasOne("ZooWebShopAPI.Entities.DeliveryAddress", "DeliveryAddress")
@@ -319,15 +330,11 @@ namespace ZooWebShopAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZooWebShopAPI.Entities.User", "User")
+                    b.HasOne("ZooWebShopAPI.Entities.User", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("DeliveryAddress");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ZooWebShopAPI.Entities.Photo", b =>

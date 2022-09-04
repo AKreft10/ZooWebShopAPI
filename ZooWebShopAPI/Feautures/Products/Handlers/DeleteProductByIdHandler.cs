@@ -21,7 +21,6 @@ namespace ZooWebShopAPI.Feautures.Products.Handlers
         {
             await _dataAccess.DeleteProduct(request.id);
             return await Task.FromResult(Unit.Value);
-
         }
     }
 }

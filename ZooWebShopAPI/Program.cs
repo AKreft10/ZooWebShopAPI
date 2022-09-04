@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using FluentEmail.MailKitSmtp;
 using FluentValidation;
 using FluentValidation.AspNetCore;

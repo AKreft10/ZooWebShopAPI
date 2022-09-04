@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZooWebShopAPI.Persistence.DbContexts;
 
@@ -11,9 +12,10 @@ using ZooWebShopAPI.Persistence.DbContexts;
 namespace ZooWebShopAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220830170656_UserId")]
+    partial class UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,10 +113,6 @@ namespace ZooWebShopAPI.Migrations
 
                     b.Property<decimal>("FinalPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("InvoiceUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");

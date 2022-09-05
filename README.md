@@ -1,5 +1,5 @@
 
-![Logo](https://i.ibb.co/qCxQn46/73db85dead404783ba67d2c116fc907e-removebg-preview.png)
+![Logo](https://i.ibb.co/0QPbzk0/73db85dead404783ba67d2c116fc907e.png)
 
 
 # ZooShop

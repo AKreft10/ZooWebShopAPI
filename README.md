@@ -36,7 +36,7 @@ The ZooWebShop app is a simple online store for pet owners.
 - Add products to categories
 
 ## Database Diagram
-![diagram](https://ibb.co/Px2w0v1)
+![diagram](https://i.ibb.co/MnzMQxP/dbdiagram.png)
 
 ## Invoices
 Invoices are auto-generated for every user order after the payment process. The template

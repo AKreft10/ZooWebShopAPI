@@ -18,7 +18,7 @@ The ZooWebShop app is a simple online store for pet owners.
 - FluentValidation
 
 ## Features (User)
-- Register account
+- Authorization by JWT Tokens
 - Activate account (by activation link on users email)
 - Reset password (by reset password link on users email)
 - Get paginated product list

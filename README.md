@@ -40,7 +40,7 @@ The ZooWebShop app is a simple online store for pet owners.
 
 ## Invoices
 Invoices are auto-generated for every user order after the payment process. The template
-for invoice has been created with QuestPDF, and looks like this:
+for invoice has been created with QuestPDF, sample invoice below:
 
 ![invoice](https://i.ibb.co/TKC2mXN/invocie.png)
 ## API documentation

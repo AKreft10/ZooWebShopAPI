@@ -35,12 +35,14 @@ The ZooWebShop app is a simple online store for pet owners.
 - Create/Update/Delete categories
 - Add products to categories
 
+## Database Diagram
+![diagram](https://ibb.co/Px2w0v1)
 
 ## Invoices
 Invoices are auto-generated for every user order after the payment process. The template
 for invoice has been created with QuestPDF, and looks like this:
 
-![alt text](https://i.ibb.co/TKC2mXN/invocie.png)
+![invoice](https://i.ibb.co/TKC2mXN/invocie.png)
 ## API documentation
 
 The API documentation is available at `~api/swagger`

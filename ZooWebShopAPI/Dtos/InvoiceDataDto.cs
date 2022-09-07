@@ -9,7 +9,7 @@ namespace ZooWebShopAPI.Dtos
 {
     public class InvoiceDataDto
     {
-        public List<string> Products { get; set; }
+        public List<CartItem> Products { get; set; }
         public User User { get; set; }
     }
 }

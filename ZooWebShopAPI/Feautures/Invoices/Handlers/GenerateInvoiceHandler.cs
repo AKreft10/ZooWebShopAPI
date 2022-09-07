@@ -17,6 +17,8 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
 
         private byte[] GeneratePdfInvoice(InvoiceDataDto dto)
         {
+            decimal subtotal = 0;
+
             var result = Document.Create(document =>
             {
                 document.Page(page =>
@@ -46,10 +48,10 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                                 .Text("Invoice #4211");
 
                                 column.Item()
-                                .Text("Issue date: 25.10.2020");
+                                .Text($"Issue date: {(DateTime.Today).ToString("dd/MM/yyyy")}");
 
                                 column.Item()
-                                .Text("Due date: 08.11.2020");
+                                .Text($"Due date: {(DateTime.Today.Date.AddDays(14)).ToString("dd/MM/yyyy")}");
                             });
                         });
 
@@ -71,17 +73,17 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                             .SemiBold();
 
                             column.Item()
-                            .Text("John Smith")
+                            .Text($"{dto.User.FirstName} {dto.User.LastName}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
 
                             column.Item()
-                            .Text("2 Court Square")
+                            .Text($"{dto.User.Street}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
 
                             column.Item()
-                            .Text("New York, NY 12210")
+                            .Text($"{dto.User.City} {dto.User.PostalCode}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
                         });
@@ -96,17 +98,17 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                             .SemiBold();
 
                             column.Item()
-                            .Text("John Smith")
+                            .Text($"{dto.User.FirstName} {dto.User.LastName}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
 
                             column.Item()
-                            .Text("3787 Pineview Drive")
+                            .Text($"{dto.User.Street}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
 
                             column.Item()
-                            .Text("Cambridge, MA 12210")
+                            .Text($"{dto.User.City} {dto.User.PostalCode}")
                             .FontFamily(Fonts.Tahoma)
                             .FontSize(12);
                         });
@@ -126,16 +128,20 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                             {
                                 header.Cell().AlignCenter().Text("#").SemiBold();
                                 header.Cell().Text("Product name").SemiBold();
-                                header.Cell().AlignCenter().Text("Quantity").SemiBold();
                                 header.Cell().AlignCenter().Text("Price").SemiBold();
+                                header.Cell().AlignCenter().Text("Quantity").SemiBold();
                             });
 
-                            foreach (var i in Enumerable.Range(1, 29))
+                            int iterationCount = 1;
+
+                            foreach(var item in dto.Products)
                             {
-                                table.Cell().AlignCenter().Text(i);
-                                table.Cell().Text("PRODUCT NAME");
-                                table.Cell().AlignCenter().Text(i);
-                                table.Cell().AlignCenter().Text(i);
+                                table.Cell().AlignCenter().Text(iterationCount);
+                                table.Cell().Text(item.Product.Name);
+                                table.Cell().AlignCenter().Text(Math.Round(item.Product.Price,2));
+                                table.Cell().AlignCenter().Text(item.Quantity);
+                                iterationCount++;
+                                subtotal += (item.Product.Price * item.Quantity);
                             }
 
                         });
@@ -157,9 +163,9 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                                 header.Cell().AlignRight().Text("TOTAL").SemiBold();
                             });
 
-                            table.Cell().AlignRight().Text("!23");
-                            table.Cell().AlignRight().Text("!23");
-                            table.Cell().AlignRight().Text("!23");
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal,2));
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal*0.23m,2));
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal*1.23m,2));
 
                         });
 

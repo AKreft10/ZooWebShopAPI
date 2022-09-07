@@ -20,7 +20,7 @@ namespace ZooWebShopAPI.Controllers
         public async Task<IActionResult> RegisterNewUser([FromBody] RegisterUserDto dto)
         {
             await _mediator.Send(new RegisterNewUserCommand(dto));
-            return Ok();
+            return Ok("Email with activation link has been sent. Click the button to activate your account.");
         }
 
         [HttpPost("login")]

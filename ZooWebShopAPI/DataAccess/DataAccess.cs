@@ -238,6 +238,25 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
+    public async Task EmptyUsersCart(int? id)
+    {
+        var user = await GetUserById(id);
+        user.CartProducts.Clear();
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveItemFromUsersCart(int itemId, int? userId)
+    {
+        var user = await GetUserById(userId);
+        var product = (user.CartProducts.FirstOrDefault(z => z.ProductId == itemId));
+
+        if (product == null)
+            throw new NotFoundException("Product not found");
+
+        user.CartProducts.Remove(product);
+        await _context.SaveChangesAsync();
+    }
+
     private async Task<Order?> GetOrderById(User user, int orderId)
     {
         var order = user
@@ -263,6 +282,8 @@ public class DataAccess : IDataAccess
         return user;
     }
 
+
+
     private async Task<User> GetUserByEmail(string email)
     {
         var user = await _context
@@ -277,4 +298,6 @@ public class DataAccess : IDataAccess
 
         return user;
     }
+
+
 }

@@ -28,11 +28,9 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
             Cloudinary cloudinary = new Cloudinary(_configuration.GetSection("Cloudinary")["CloudinaryUrl"]);
             cloudinary.Api.Secure = true;
 
-            var invoice = await _mediator.Send(new GenerateInvoiceCommand(new InvoiceDataDto()));
-
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription("invoice", new MemoryStream(invoice)),
+                File = new FileDescription($"invoice{Guid.NewGuid()}", new MemoryStream(request.invoice)),
                 UseFilename = true,
                 UniqueFilename = false,
                 Overwrite = true

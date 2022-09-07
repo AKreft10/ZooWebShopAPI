@@ -26,11 +26,12 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
         {
             var userId = await _mediator.Send(new GetUserIdCommand());
             var cartItems = await _dataAccess.GetUsersCartItems(userId);
+
             decimal finalPrice = 0;
 
             foreach (var item in cartItems)
             {
-                finalPrice += item.Product.Price * item.Quantity;
+                finalPrice += (item.Product.Price * item.Quantity);
             }
 
             var order = new Order()

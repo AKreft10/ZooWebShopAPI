@@ -10,7 +10,7 @@ using ZooWebShopAPI.Feautures.Accounts.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class ActivateAccountHandler : IRequestHandler<ActivateAccountCommand>
+    public class ActivateAccountHandler : INotificationHandler<ActivateAccountCommand>
     {
         private readonly ICommandDataAccess _dataAccess;
 
@@ -18,10 +18,10 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
         {
             _dataAccess = dataAccess;
         }
-        public async Task<Unit> Handle(ActivateAccountCommand request, CancellationToken cancellationToken)
+
+        public async Task Handle(ActivateAccountCommand notification, CancellationToken cancellationToken)
         {
-            await _dataAccess.ActivateAccountIfExist(request.dto);
-            return await Task.FromResult(Unit.Value);
+            await _dataAccess.ActivateAccountIfExist(notification.dto);
         }
     }
 }

@@ -7,7 +7,7 @@ using ZooWebShopAPI.Feautures.Accounts.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand>
+    public class ResetPasswordHandler : INotificationHandler<ResetPasswordCommand>
     {
         private readonly ICommandDataAccess _dataAccess;
         private readonly IPasswordHasher<User> _passwordHasher;
@@ -17,18 +17,17 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             _dataAccess = dataAccess;
             _passwordHasher = passwordHasher;
         }
-        public async Task<Unit> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
+
+        public async Task Handle(ResetPasswordCommand notification, CancellationToken cancellationToken)
         {
             var newUserPassword = new NewUserPasswordDto()
             {
-                Email = request.dto.Email,
-                Token = request.dto.ResetToken,
-                NewPasswordHash = _passwordHasher.HashPassword(request.user, request.dto.NewPassword)
+                Email = notification.dto.Email,
+                Token = notification.dto.ResetToken,
+                NewPasswordHash = _passwordHasher.HashPassword(notification.user, notification.dto.NewPassword)
             };
 
             await _dataAccess.ChangeUserPassword(newUserPassword);
-
-            return await Task.FromResult(Unit.Value);
         }
     }
 }

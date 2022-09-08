@@ -9,5 +9,5 @@ using ZooWebShopAPI.Entities;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Commands
 {
-    public record ResetPasswordCommand(CreateNewPasswordDto dto, User user) : IRequest;
+    public record ResetPasswordCommand(CreateNewPasswordDto dto, User user) : INotification;
 }

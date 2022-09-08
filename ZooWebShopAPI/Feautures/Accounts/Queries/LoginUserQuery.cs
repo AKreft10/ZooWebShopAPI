@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 
-namespace ZooWebShopAPI.Feautures.Accounts.Commands
+namespace ZooWebShopAPI.Feautures.Accounts.Queries
 {
-    public record LoginUserCommand(LoginUserDto dto) : IRequest<string>;
+    public record LoginUserQuery(LoginUserDto dto) : IRequest<string>;
 }

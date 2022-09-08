@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Categories.Queries;
 using ZooWebShopAPI.Models;
@@ -16,9 +17,9 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 
     public class GetProductsByCategoryNameHandler : IRequestHandler<GetProductsByCategoryNameQuery, List<ProductModel>>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
 
-        public GetProductsByCategoryNameHandler(IDataAccess dataAccess)
+        public GetProductsByCategoryNameHandler(IQueryDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

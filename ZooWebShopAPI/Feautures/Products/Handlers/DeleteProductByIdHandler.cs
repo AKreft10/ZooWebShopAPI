@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Feautures.Products.Commands;
 
 namespace ZooWebShopAPI.Feautures.Products.Handlers
 {
     public class DeleteProductByIdHandler : IRequestHandler<DeleteProductByIdCommand>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
 
-        public DeleteProductByIdHandler(IDataAccess dataAccess)
+        public DeleteProductByIdHandler(ICommandDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

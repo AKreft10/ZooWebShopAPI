@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
 using ZooWebShopAPI.Feautures.Emails.Commands;
@@ -14,10 +15,10 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
     public class SetResetPasswordTokenHandler : IRequestHandler<SetResetPasswordToken>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
         private readonly IMediator _mediator;
 
-        public SetResetPasswordTokenHandler(IDataAccess dataAccess, IMediator mediator)
+        public SetResetPasswordTokenHandler(ICommandDataAccess dataAccess, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _mediator = mediator;

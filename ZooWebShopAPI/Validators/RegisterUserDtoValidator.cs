@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Validators
@@ -12,7 +13,7 @@ namespace ZooWebShopAPI.Validators
     public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {
 
-        public RegisterUserDtoValidator(IDataAccess dataAccess)
+        public RegisterUserDtoValidator(ICommandDataAccess dataAccess)
         {
             RuleFor(z => z.Email)
                 .NotEmpty()

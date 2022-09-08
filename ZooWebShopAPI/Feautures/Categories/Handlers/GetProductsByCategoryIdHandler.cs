@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Categories.Queries;
@@ -9,9 +10,9 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {
     public class GetProductsByCategoryIdHandler : IRequestHandler<GetProductsByCategoryIdQuery, List<ProductModel>>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
 
-        public GetProductsByCategoryIdHandler(IDataAccess dataAccess)
+        public GetProductsByCategoryIdHandler(IQueryDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

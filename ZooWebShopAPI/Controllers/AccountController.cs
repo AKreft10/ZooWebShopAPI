@@ -47,7 +47,9 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody]CreateNewPasswordDto dto)
         {
-            await _mediator.Send(new ResetPasswordCommand(dto));
+            var user = await _mediator.Send(new GetUserByEmailAddressCommand(dto.Email));
+
+            await _mediator.Send(new ResetPasswordCommand(dto, user));
             return Ok("Your password has been reset successfully!");
         }
     }

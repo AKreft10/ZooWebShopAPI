@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Feautures.Products.Commands;
 
 namespace ZooWebShopAPI.Feautures.Products.Handlers
 {
     public class EditProductHandler : IRequestHandler<EditProductCommand>
     {
-        private readonly IDataAccess _dataContext;
+        private readonly ICommandDataAccess _dataContext;
 
-        public EditProductHandler(IDataAccess dataContext)
+        public EditProductHandler(ICommandDataAccess dataContext)
         {
             _dataContext = dataContext;
         }

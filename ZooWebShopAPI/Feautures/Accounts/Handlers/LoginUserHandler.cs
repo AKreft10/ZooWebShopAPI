@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
@@ -17,11 +18,11 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
     public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
         private readonly AuthenticationSettings _authenticationSettings;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public LoginUserHandler(IDataAccess dataAccess, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public LoginUserHandler(IQueryDataAccess dataAccess, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
         {
             _dataAccess = dataAccess;
             _authenticationSettings = authenticationSettings;

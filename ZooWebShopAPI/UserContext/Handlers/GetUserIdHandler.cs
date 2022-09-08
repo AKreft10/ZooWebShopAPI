@@ -5,11 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using ZooWebShopAPI.UserContext.Commands;
+using ZooWebShopAPI.UserContext.Queries;
 
 namespace ZooWebShopAPI.UserContext.Handlers
 {
-    public class GetUserIdHandler : IRequestHandler<GetUserIdCommand, int?>
+    public class GetUserIdHandler : IRequestHandler<GetUserIdQuery, int?>
     {
         private readonly IHttpContextAccessor _httpContext;
 
@@ -18,7 +18,7 @@ namespace ZooWebShopAPI.UserContext.Handlers
             _httpContext = httpContext;
         }
 
-        public Task<int?> Handle(GetUserIdCommand request, CancellationToken cancellationToken)
+        public Task<int?> Handle(GetUserIdQuery request, CancellationToken cancellationToken)
         {
             var user = _httpContext.HttpContext.User;
             var userId = user is null ? null : (int?)int.Parse(user.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);

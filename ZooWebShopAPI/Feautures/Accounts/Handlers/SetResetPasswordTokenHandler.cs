@@ -13,7 +13,7 @@ using ZooWebShopAPI.Feautures.Emails.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class SetResetPasswordTokenHandler : IRequestHandler<SetResetPasswordToken>
+    public class SetResetPasswordTokenHandler : INotificationHandler<SetResetPasswordToken>
     {
         private readonly ICommandDataAccess _dataAccess;
         private readonly IMediator _mediator;
@@ -24,17 +24,15 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(SetResetPasswordToken request, CancellationToken cancellationToken)
+        public async Task Handle(SetResetPasswordToken notification, CancellationToken cancellationToken)
         {
             var resetTokenDto = new ResetPasswordDto()
             {
-                Email = request.email,
+                Email = notification.email,
                 ResetToken = GenerateRandomResetToken(),
             };
             await _dataAccess.ResetPasswordSetToken(resetTokenDto);
-            await _mediator.Send(new SendResetPasswordCommand(resetTokenDto));
-
-            return await Task.FromResult(Unit.Value);
+            await _mediator.Publish(new SendEmailResetPasswordCommand(resetTokenDto));
         }
 
         private string GenerateRandomResetToken()

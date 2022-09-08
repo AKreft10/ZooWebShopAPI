@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ZooWebShopAPI.Feautures.Carts.Commands
 {
-    public record PayForOrderCommand(int id) : IRequest;
+    public record PayForOrderCommand(int id) : INotification;
 }

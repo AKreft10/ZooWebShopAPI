@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Feautures.Invoices.Commands;
-using ZooWebShopAPI.Feautures.Invoices.Notifications;
 
 namespace ZooWebShopAPI.Feautures.Invoices.Handlers
 {

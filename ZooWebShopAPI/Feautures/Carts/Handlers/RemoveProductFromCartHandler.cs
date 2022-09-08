@@ -10,7 +10,7 @@ using ZooWebShopAPI.Feautures.Carts.Commands;
 
 namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
-    public class RemoveProductFromCartHandler : IRequestHandler<RemoveProductFromCartCommand>
+    public class RemoveProductFromCartHandler : INotificationHandler<RemoveProductFromCartCommand>
     {
         private readonly ICommandDataAccess _dataAccess;
 
@@ -19,10 +19,9 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
             _dataAccess = dataAccess;
         }
 
-        public async Task<Unit> Handle(RemoveProductFromCartCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveProductFromCartCommand notification, CancellationToken cancellationToken)
         {
-            await _dataAccess.RemoveItemFromUsersCart(request.itemId, request.userId);
-            return await Task.FromResult(Unit.Value);
+            await _dataAccess.RemoveItemFromUsersCart(notification.itemId, notification.userId);
         }
     }
 }

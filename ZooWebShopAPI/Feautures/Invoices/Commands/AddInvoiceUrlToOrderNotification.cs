@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 
-namespace ZooWebShopAPI.Feautures.Emails.Notifications
+namespace ZooWebShopAPI.Feautures.Invoices.Commands
 {
-    public record SendEmailWithInvoiceNotification(SendEmailWithInvoiceDto dto) : INotification;
+    public record AddInvoiceUrlToOrderNotification(AddInvoiceToOrderDto dto) : INotification;
 }

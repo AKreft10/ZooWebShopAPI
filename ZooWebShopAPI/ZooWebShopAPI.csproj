@@ -37,10 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Feautures\Accounts\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\EmailTemplates\AccountActivationEmail.cshtml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

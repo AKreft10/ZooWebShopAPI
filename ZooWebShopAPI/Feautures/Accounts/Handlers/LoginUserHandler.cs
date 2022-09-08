@@ -13,10 +13,11 @@ using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
+using ZooWebShopAPI.Feautures.Accounts.Queries;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
+    public class LoginUserHandler : IRequestHandler<LoginUserQuery, string>
     {
         private readonly IQueryDataAccess _dataAccess;
         private readonly AuthenticationSettings _authenticationSettings;
@@ -29,7 +30,7 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<string> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _dataAccess.GetUserByGivenLoginCredentials(request.dto);
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.dto.Password);

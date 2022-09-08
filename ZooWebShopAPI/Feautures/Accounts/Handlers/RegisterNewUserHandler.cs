@@ -15,7 +15,7 @@ using ZooWebShopAPI.Feautures.Emails.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class RegisterNewUserHandler : IRequestHandler<RegisterNewUserCommand>
+    public class RegisterNewUserHandler : INotificationHandler<RegisterNewUserCommand>
     {
         private readonly ICommandDataAccess _dataAccess;
         private readonly IPasswordHasher<User> _passwordHasher;
@@ -28,25 +28,25 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RegisterNewUserCommand notification, CancellationToken cancellationToken)
         {
             var randomActivationToken = GenerateRandomActivationToken();
 
             var newUser = new User()
             {
-                Email = request.dto.Email,
-                FirstName = request.dto.FirstName,
-                LastName = request.dto.LastName,
-                DateOfBirth = request.dto.DateOfBirth,
-                City = request.dto.City,
-                Street = request.dto.Street,
-                PostalCode = request.dto.PostalCode,
-                PhoneNumber = request.dto.PhoneNumber,
-                RoleId = request.dto.RoleId,
+                Email = notification.dto.Email,
+                FirstName = notification.dto.FirstName,
+                LastName = notification.dto.LastName,
+                DateOfBirth = notification.dto.DateOfBirth,
+                City = notification.dto.City,
+                Street = notification.dto.Street,
+                PostalCode = notification.dto.PostalCode,
+                PhoneNumber = notification.dto.PhoneNumber,
+                RoleId = notification.dto.RoleId,
                 ActivationToken = randomActivationToken
             };
 
-            var hashedPassword = _passwordHasher.HashPassword(newUser, request.dto.Password);
+            var hashedPassword = _passwordHasher.HashPassword(newUser, notification.dto.Password);
             newUser.PasswordHash = hashedPassword;
 
             await _dataAccess.RegisterUser(newUser);
@@ -58,8 +58,6 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
             };
 
             await _mediator.Send(new SendActivationEmailCommand(emailActivationData));
-
-            return await Task.FromResult(Unit.Value);
         }
 
         private string GenerateRandomActivationToken()

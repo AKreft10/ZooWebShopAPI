@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Entities;
 
-namespace ZooWebShopAPI.Feautures.Accounts.Commands
+namespace ZooWebShopAPI.Feautures.Accounts.Queries
 {
-    public record GetUserByEmailAddressCommand(string emailAddress) : IRequest<User>;
+    public record GetUserByEmailAddressQuery(string emailAddress) : IRequest<User>;
 
 }

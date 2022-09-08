@@ -5,4 +5,4 @@ using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Feautures.Products.Commands;
 
-public record AddNewProductCommand(AddProductDto dto) : IRequest;
+public record AddNewProductCommand(AddProductDto dto) : INotification;

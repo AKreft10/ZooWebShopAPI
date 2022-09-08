@@ -8,11 +8,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 using ZooWebShopAPI.Feautures.Carts.Queries;
+using ZooWebShopAPI.Feautures.Emails.Commands;
+using ZooWebShopAPI.Feautures.Emails.Notifications;
 using ZooWebShopAPI.Feautures.Invoices.Commands;
+using ZooWebShopAPI.Feautures.Invoices.Notifications;
 using ZooWebShopAPI.Models;
 using ZooWebShopAPI.Persistence.DbContexts;
 using ZooWebShopAPI.UserContext.Commands;
@@ -25,10 +29,12 @@ namespace ZooWebShopAPI.Controllers
     public class CartController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IQueryDataAccess _dataAccess;
 
-        public CartController(IMediator mediator)
+        public CartController(IMediator mediator, IQueryDataAccess dataAccess)
         {
             _mediator = mediator;
+            _dataAccess = dataAccess;
         }
 
         [HttpGet]
@@ -66,8 +72,42 @@ namespace ZooWebShopAPI.Controllers
         [Route("pay-for-order/{id}")]
         public async Task<IActionResult> PayForOrder([FromRoute]int id)
         {
+            //pay for order
             await _mediator.Send(new PayForOrderCommand(id));
-            return Ok("Payment succeeded. Invoice has been sent on your email address."); //temporary 'solution'
+
+            //generate invoice 
+            var invoiceData = new InvoiceDataDto()
+            {
+                User = await _dataAccess.GetUserById(await GetUserId()),
+                Products = await _dataAccess.GetUsersCartItems(await GetUserId())
+            };
+
+            var invoice = await _mediator.Send(new GenerateInvoiceCommand(invoiceData));
+            var invoiceUrl = await _mediator.Send(new UploadInvoiceCommand(invoice));
+
+            //add invoice to order
+
+            AddInvoiceToOrderDto addInvoiceToOrderDto = new()
+            {
+                orderId = id,
+                userId = await GetUserId(),
+                invoiceUrl = invoiceUrl
+            };
+
+            await _mediator.Publish(new AddInvoiceUrlToOrderNotification(addInvoiceToOrderDto));
+
+            //send an email for a user with generated invoice
+
+            var dataToSendAnEmail = new SendEmailWithInvoiceDto()
+            {
+                user = await _dataAccess.GetUserById(await GetUserId()),
+                invoice = invoice,
+            };
+
+            await _mediator.Publish(new SendEmailWithInvoiceNotification(dataToSendAnEmail));
+
+
+            return Ok("Payment succeeded. Invoice has been sent on your email address.");
         }
 
         private async Task<int?> GetUserId() => await _mediator.Send(new GetUserIdCommand());

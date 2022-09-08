@@ -14,11 +14,11 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
     public class GetCartItemsHandler : IRequestHandler<GetCartItemsQuery, List<CartItem>>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
         private readonly IHttpContextAccessor _httpContext;
         private readonly IMediator _mediator;
 
-        public GetCartItemsHandler(IDataAccess dataAccess, IHttpContextAccessor httpContext, IMediator mediator)
+        public GetCartItemsHandler(ICommandDataAccess dataAccess, IHttpContextAccessor httpContext, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _httpContext = httpContext;

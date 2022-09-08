@@ -13,10 +13,10 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
     public class AddProductToCartHandler : IRequestHandler<AddProductToCartCommand>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
         private readonly IHttpContextAccessor _httpContext;
 
-        public AddProductToCartHandler(IDataAccess dataAccess, IHttpContextAccessor httpContext)
+        public AddProductToCartHandler(ICommandDataAccess dataAccess, IHttpContextAccessor httpContext)
         {
             _dataAccess = dataAccess;
             _httpContext = httpContext;

@@ -10,7 +10,7 @@ using ZooWebShopAPI.Feautures.Products.Commands;
 
 namespace ZooWebShopAPI.Feautures.Products.Handlers
 {
-    public class DeleteProductByIdHandler : IRequestHandler<DeleteProductByIdCommand>
+    public class DeleteProductByIdHandler : INotificationHandler<DeleteProductByIdCommand>
     {
         private readonly ICommandDataAccess _dataAccess;
 
@@ -18,10 +18,10 @@ namespace ZooWebShopAPI.Feautures.Products.Handlers
         {
             _dataAccess = dataAccess;
         }
-        public async Task<Unit> Handle(DeleteProductByIdCommand request, CancellationToken cancellationToken)
+
+        public async Task Handle(DeleteProductByIdCommand notification, CancellationToken cancellationToken)
         {
-            await _dataAccess.DeleteProduct(request.id);
-            return await Task.FromResult(Unit.Value);
+            await _dataAccess.DeleteProduct(notification.id);
         }
     }
 }

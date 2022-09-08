@@ -19,7 +19,7 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 
         public async Task<List<ProductModel>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _dataAccess.GetProductsByCategoryId(request.id);
+            var result = await _dataAccess.GetProductsByCategoryId(request.id); // TO CHANGE
 
             if (result is null)
                 throw new NotFoundException("Products not found");

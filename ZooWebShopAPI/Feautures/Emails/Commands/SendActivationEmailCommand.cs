@@ -8,5 +8,5 @@ using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Feautures.Emails.Commands
 {
-    public record SendActivationEmailCommand(ActivationEmailDto dto) : IRequest;
+    public record SendActivationEmailCommand(ActivationEmailDto dto) : INotification;
 }

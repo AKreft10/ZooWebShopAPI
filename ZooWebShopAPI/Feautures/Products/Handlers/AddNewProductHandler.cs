@@ -7,7 +7,7 @@ using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Handlers;
 
-public class AddNewProductHandler : IRequestHandler<AddNewProductCommand>
+public class AddNewProductHandler : INotificationHandler<AddNewProductCommand>
 {
     private readonly ICommandDataAccess _dataAccess;
 
@@ -16,25 +16,23 @@ public class AddNewProductHandler : IRequestHandler<AddNewProductCommand>
         _dataAccess = dataAccess;
     }
 
-
-    public async Task<Unit> Handle(AddNewProductCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddNewProductCommand notification, CancellationToken cancellationToken)
     {
         var productToAdd = new Product()
         {
-            Name = request.dto.Name,
-            OriginalPrice = request.dto.OriginalPrice,
-            Price = request.dto.Price,
-            Photos = request.dto.Photos.Select(z => new Photo
+            Name = notification.dto.Name,
+            OriginalPrice = notification.dto.OriginalPrice,
+            Price = notification.dto.Price,
+            Photos = notification.dto.Photos.Select(z => new Photo
             {
                 PhotoUrl = z.PhotoUrl
             }).ToList(),
-            ProductCategories = request.dto.Categories.Select(z => new ProductCategory()
+            ProductCategories = notification.dto.Categories.Select(z => new ProductCategory()
             {
                 CategoryId = z.CategoryId
             }).ToList()
         };
 
         await _dataAccess.AddNewProduct(productToAdd);
-        return await Task.FromResult(Unit.Value);
     }
 }

@@ -10,7 +10,7 @@ using ZooWebShopAPI.Feautures.Products.Commands;
 
 namespace ZooWebShopAPI.Feautures.Products.Handlers
 {
-    public class EditProductHandler : IRequestHandler<EditProductCommand>
+    public class EditProductHandler : INotificationHandler<EditProductCommand>
     {
         private readonly ICommandDataAccess _dataContext;
 
@@ -18,10 +18,10 @@ namespace ZooWebShopAPI.Feautures.Products.Handlers
         {
             _dataContext = dataContext;
         }
-        public async Task<Unit> Handle(EditProductCommand request, CancellationToken cancellationToken)
+
+        public async Task Handle(EditProductCommand notification, CancellationToken cancellationToken)
         {
-            await _dataContext.EditProduct(request.dto);
-            return await Task.FromResult(Unit.Value);
+            await _dataContext.EditProduct(notification.dto);
         }
     }
 }

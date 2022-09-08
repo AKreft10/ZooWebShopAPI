@@ -1,20 +1,11 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
-using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Carts.Commands;
-using ZooWebShopAPI.Feautures.Emails.Commands;
-using ZooWebShopAPI.Feautures.Invoices.Commands;
-using ZooWebShopAPI.UserContext.Commands;
+using ZooWebShopAPI.UserContext.Queries;
 
 namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
-    public class PayForOrderHandler : IRequestHandler<PayForOrderCommand>
+    public class PayForOrderHandler : INotificationHandler<PayForOrderCommand>
     {
         private readonly IMediator _mediator;
         private readonly ICommandDataAccess _dataAccess;
@@ -24,11 +15,11 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
             _mediator = mediator;
             _dataAccess = dataAccess;
         }
-        public async Task<Unit> Handle(PayForOrderCommand request, CancellationToken cancellationToken)
+
+        public async Task Handle(PayForOrderCommand notification, CancellationToken cancellationToken)
         {
-            var userId = await _mediator.Send(new GetUserIdCommand());
-            await _dataAccess.PayForOrder(request.id, userId);
-            return await Task.FromResult(Unit.Value);
+            var userId = await _mediator.Send(new GetUserIdQuery()); // TO REMOVE
+            await _dataAccess.PayForOrder(notification.id, userId);
         }
     }
 }

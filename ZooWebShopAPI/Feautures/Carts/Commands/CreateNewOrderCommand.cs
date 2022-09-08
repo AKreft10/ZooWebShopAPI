@@ -8,5 +8,5 @@ using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Feautures.Carts.Commands
 {
-    public record CreateNewOrderCommand(DeliveryAddressDto? dto) : IRequest;
+    public record CreateNewOrderCommand(DeliveryAddressDto? dto) : INotification;
 }

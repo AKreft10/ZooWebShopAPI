@@ -8,5 +8,5 @@ using ZooWebShopAPI.Dtos;
 
 namespace ZooWebShopAPI.Feautures.Emails.Commands
 {
-    public record SendResetPasswordCommand(ResetPasswordDto dto) : IRequest;
+    public record SendEmailResetPasswordCommand(ResetPasswordDto dto) : INotification;
 }

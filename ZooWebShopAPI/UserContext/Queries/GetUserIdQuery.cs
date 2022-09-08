@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZooWebShopAPI.UserContext.Commands
+namespace ZooWebShopAPI.UserContext.Queries
 {
-    public record GetUserIdCommand : IRequest<int?>;
+    public record GetUserIdQuery : IRequest<int?>;
 }

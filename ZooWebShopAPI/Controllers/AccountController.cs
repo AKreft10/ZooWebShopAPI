@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
+using ZooWebShopAPI.Feautures.Accounts.Queries;
 
 namespace ZooWebShopAPI.Controllers
 {
@@ -19,14 +20,14 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterNewUser([FromBody] RegisterUserDto dto)
         {
-            await _mediator.Send(new RegisterNewUserCommand(dto));
+            await _mediator.Send(new Feautures.Accounts.Commands.RegisterNewUserCommand(dto));
             return Ok("Email with activation link has been sent. Click the button to activate your account.");
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
         {
-            string token = await _mediator.Send(new LoginUserCommand(dto));
+            string token = await _mediator.Send(new LoginUserQuery(dto));
             return Ok(token);
         }
 
@@ -47,7 +48,7 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody]CreateNewPasswordDto dto)
         {
-            var user = await _mediator.Send(new GetUserByEmailAddressCommand(dto.Email));
+            var user = await _mediator.Send(new GetUserByEmailAddressQuery(dto.Email));
 
             await _mediator.Send(new ResetPasswordCommand(dto, user));
             return Ok("Your password has been reset successfully!");

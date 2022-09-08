@@ -1,15 +1,8 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Carts.Queries;
-using ZooWebShopAPI.UserContext.Commands;
+using ZooWebShopAPI.UserContext.Queries;
 
 namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
@@ -25,7 +18,7 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
         }
         public async Task<List<CartItem>> Handle(GetCartItemsQuery request, CancellationToken cancellationToken)
         {
-            var userId = await _mediator.Send(new GetUserIdCommand());
+            var userId = await _mediator.Send(new GetUserIdQuery());
             var items = await _dataAccess.GetUsersCartItems(userId);
             return items;
         }

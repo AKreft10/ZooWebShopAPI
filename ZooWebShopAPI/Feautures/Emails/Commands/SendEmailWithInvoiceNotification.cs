@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 
-namespace ZooWebShopAPI.Feautures.Carts.Commands
+namespace ZooWebShopAPI.Feautures.Emails.Commands
 {
-    public record GetInvoiceDataCommand(int? userId) : IRequest<InvoiceDataDto>;
+    public record SendEmailWithInvoiceNotification(SendEmailWithInvoiceDto dto) : INotification;
 }

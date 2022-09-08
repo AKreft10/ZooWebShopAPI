@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 
-namespace ZooWebShopAPI.Feautures.Invoices.Notifications
+namespace ZooWebShopAPI.Feautures.Carts.Queries
 {
-    public record AddInvoiceUrlToOrderNotification(AddInvoiceToOrderDto dto) : INotification;
+    public record GetInvoiceDataQuery(int? userId) : IRequest<InvoiceDataDto>;
 }

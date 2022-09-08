@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ZooWebShopAPI.Feautures.Carts.Commands
 {
-    public record RemoveProductFromCartCommand(int itemId, int? userId) : IRequest;
+    public record RemoveProductFromCartCommand(int itemId, int? userId) : INotification;
 }

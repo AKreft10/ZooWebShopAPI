@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ZooWebShopAPI.Feautures.Products.Commands
 {
-    public record DeleteProductByIdCommand(int id) : IRequest;
+    public record DeleteProductByIdCommand(int id) : INotification;
 }

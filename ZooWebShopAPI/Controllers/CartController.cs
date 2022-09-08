@@ -1,25 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 using ZooWebShopAPI.Feautures.Carts.Queries;
 using ZooWebShopAPI.Feautures.Emails.Commands;
-using ZooWebShopAPI.Feautures.Emails.Notifications;
 using ZooWebShopAPI.Feautures.Invoices.Commands;
-using ZooWebShopAPI.Feautures.Invoices.Notifications;
-using ZooWebShopAPI.Models;
-using ZooWebShopAPI.Persistence.DbContexts;
-using ZooWebShopAPI.UserContext.Commands;
+using ZooWebShopAPI.UserContext.Queries;
 
 namespace ZooWebShopAPI.Controllers
 {
@@ -46,7 +34,7 @@ namespace ZooWebShopAPI.Controllers
 
         [HttpPost]
         [Route("add-item")]
-        public async Task<IActionResult> AddItemToCart([FromBody]AddProductToCartDto dto)
+        public async Task<IActionResult> AddItemToCart([FromBody] AddProductToCartDto dto)
         {
             await _mediator.Send(new AddProductToCartCommand(dto));
             return Ok();
@@ -54,7 +42,7 @@ namespace ZooWebShopAPI.Controllers
 
         [HttpPost]
         [Route("remove-item/{itemId}")]
-        public async Task<IActionResult> RemoveItemFromCart([FromRoute]int itemId)
+        public async Task<IActionResult> RemoveItemFromCart([FromRoute] int itemId)
         {
             await _mediator.Send(new RemoveProductFromCartCommand(itemId, await GetUserId()));
             return Ok("Item has been successfully removed from the cart.");
@@ -62,7 +50,7 @@ namespace ZooWebShopAPI.Controllers
 
         [HttpPost]
         [Route("submit")]
-        public async Task<IActionResult> CreateNewOrder([FromBody]DeliveryAddressDto? dto)
+        public async Task<IActionResult> CreateNewOrder([FromBody] DeliveryAddressDto? dto)
         {
             await _mediator.Send(new CreateNewOrderCommand(dto));
             return Ok();
@@ -70,7 +58,7 @@ namespace ZooWebShopAPI.Controllers
 
         [HttpPost]
         [Route("pay-for-order/{id}")]
-        public async Task<IActionResult> PayForOrder([FromRoute]int id)
+        public async Task<IActionResult> PayForOrder([FromRoute] int id)
         {
             //pay for order
             await _mediator.Send(new PayForOrderCommand(id));
@@ -110,6 +98,6 @@ namespace ZooWebShopAPI.Controllers
             return Ok("Payment succeeded. Invoice has been sent on your email address.");
         }
 
-        private async Task<int?> GetUserId() => await _mediator.Send(new GetUserIdCommand());
+        private async Task<int?> GetUserId() => await _mediator.Send(new GetUserIdQuery());
     }
 }

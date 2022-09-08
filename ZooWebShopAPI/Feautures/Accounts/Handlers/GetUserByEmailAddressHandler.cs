@@ -4,24 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
+using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
 
 namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
-    public class ActivateAccountHandler : IRequestHandler<ActivateAccountCommand>
+    public class GetUserByEmailAddressHandler : IRequestHandler<GetUserByEmailAddressCommand, User>
     {
         private readonly ICommandDataAccess _dataAccess;
 
-        public ActivateAccountHandler(ICommandDataAccess dataAccess)
+        public GetUserByEmailAddressHandler(ICommandDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }
-        public async Task<Unit> Handle(ActivateAccountCommand request, CancellationToken cancellationToken)
+
+        public async Task<User> Handle(GetUserByEmailAddressCommand request, CancellationToken cancellationToken)
         {
-            await _dataAccess.ActivateAccountIfExist(request.dto);
-            return await Task.FromResult(Unit.Value);
+            return await _dataAccess.GetUserByEmail(request.emailAddress);
         }
     }
 }

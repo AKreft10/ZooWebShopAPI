@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Products.Queries;
@@ -15,9 +16,9 @@ namespace ZooWebShopAPI.Handlers
 {
     public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, PagedProductListResult<ProductModel>>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
 
-        public GetAllProductsHandler(IDataAccess dataAccess)
+        public GetAllProductsHandler(IQueryDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

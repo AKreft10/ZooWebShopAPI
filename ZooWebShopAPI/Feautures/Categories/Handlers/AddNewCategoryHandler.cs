@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Categories.Commands;
@@ -9,9 +10,9 @@ namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {
     public class AddNewCategoryHandler : IRequestHandler<AddNewCategoryCommand>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
 
-        public AddNewCategoryHandler(IDataAccess dataAccess)
+        public AddNewCategoryHandler(ICommandDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

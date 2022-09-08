@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Products.Commands;
 using ZooWebShopAPI.Models;
@@ -8,9 +9,9 @@ namespace ZooWebShopAPI.Handlers;
 
 public class AddNewProductHandler : IRequestHandler<AddNewProductCommand>
 {
-    private readonly IDataAccess _dataAccess;
+    private readonly ICommandDataAccess _dataAccess;
 
-    public AddNewProductHandler(IDataAccess dataAccess)
+    public AddNewProductHandler(ICommandDataAccess dataAccess)
     {
         _dataAccess = dataAccess;
     }

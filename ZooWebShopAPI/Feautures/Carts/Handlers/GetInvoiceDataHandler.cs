@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 
@@ -12,9 +13,9 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
     public class GetInvoiceDataHandler : IRequestHandler<GetInvoiceDataCommand, InvoiceDataDto>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
 
-        public GetInvoiceDataHandler(IDataAccess dataAccess)
+        public GetInvoiceDataHandler(IQueryDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

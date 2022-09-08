@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Emails.Commands;
@@ -15,10 +16,10 @@ namespace ZooWebShopAPI.Handlers
 {
     public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductModel>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly IQueryDataAccess _dataAccess;
         private readonly IMediator _mediator;
 
-        public GetProductByIdHandler(IDataAccess dataAccess, IMediator mediator)
+        public GetProductByIdHandler(IQueryDataAccess dataAccess, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _mediator = mediator;

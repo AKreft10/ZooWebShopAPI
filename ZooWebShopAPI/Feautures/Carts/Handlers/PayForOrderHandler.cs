@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 using ZooWebShopAPI.Feautures.Emails.Commands;
@@ -16,9 +17,9 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
     public class PayForOrderHandler : IRequestHandler<PayForOrderCommand>
     {
         private readonly IMediator _mediator;
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
 
-        public PayForOrderHandler(IMediator mediator, IDataAccess dataAccess)
+        public PayForOrderHandler(IMediator mediator, ICommandDataAccess dataAccess)
         {
             _mediator = mediator;
             _dataAccess = dataAccess;
@@ -27,20 +28,6 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
         {
             var userId = await _mediator.Send(new GetUserIdCommand());
             await _dataAccess.PayForOrder(request.id, userId);
-
-            var invoiceData = new InvoiceDataDto()
-            {
-                User = await _dataAccess.GetUserById(userId),
-                Products = await _dataAccess.GetUsersCartItems(userId)
-            };
-
-
-            var invoice = await _mediator.Send(new GenerateInvoiceCommand(invoiceData));
-            var invoiceUrl = await _mediator.Send(new UploadInvoiceCommand(invoice));
-
-            await _dataAccess.AddInvoiceUrlToOrder(request.id, userId, invoiceUrl);
-            await _mediator.Send(new SendEmailWithInvoiceCommand(invoice));
-
             return await Task.FromResult(Unit.Value);
         }
     }

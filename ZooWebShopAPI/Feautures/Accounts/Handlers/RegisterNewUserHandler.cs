@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
@@ -16,11 +17,11 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
 {
     public class RegisterNewUserHandler : IRequestHandler<RegisterNewUserCommand>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IMediator _mediator;
 
-        public RegisterNewUserHandler(IDataAccess dataAccess, IPasswordHasher<User> passwordHasher, IMediator mediator)
+        public RegisterNewUserHandler(ICommandDataAccess dataAccess, IPasswordHasher<User> passwordHasher, IMediator mediator)
         {
             _dataAccess = dataAccess;
             _passwordHasher = passwordHasher;

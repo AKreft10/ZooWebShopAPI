@@ -4,69 +4,21 @@ using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Persistence.DbContexts;
 
-namespace ZooWebShopAPI.DataAccess;
+namespace ZooWebShopAPI.DataAccess.CommandDataAccess;
 
-public class DataAccess : IDataAccess
+public class CommandDataAccess : ICommandDataAccess
 {
     private readonly AppDbContext _context;
 
-    public DataAccess(AppDbContext context)
+    public CommandDataAccess(AppDbContext context)
     {
         _context = context;
-    }
-
-    public async Task<List<Product>> GetAllProducts(PaginationParameters parameters)
-    {
-        var baseResult = await _context
-            .Products
-            .Include(z => z.Photos)
-            .Include(x => x.ProductCategories)
-            .ThenInclude(c => c.Category)
-            .ToListAsync();
-
-        return await Task.FromResult(baseResult);
-    }
-
-    public async Task<Product?> GetProductById(int id)
-    {
-        var product = await _context
-            .Products
-            .Include(z => z.Photos)
-            .FirstOrDefaultAsync(z => z.Id == id);
-
-        return product;
     }
 
     public async Task AddNewCategory(Category category)
     {
         await _context.AddAsync(category);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task<List<Product>> GetProductsByCategoryId(int id)
-    {
-        var result = await _context
-            .ProductCategory
-            .Include(z => z.Product)
-            .ThenInclude(z => z.Photos)
-            .Where(z => z.CategoryId == id)
-            .Select(z => z.Product)
-            .ToListAsync();
-
-        return result;
-    }
-
-    public async Task<List<Product>> GetProductsByCategoryName(string name)
-    {
-        var result = await _context
-            .ProductCategory
-            .Include(z => z.Product)
-            .ThenInclude(z => z.Photos)
-            .Where(z => z.Category.Name.ToLower() == name.ToLower())
-            .Select(z => z.Product)
-            .ToListAsync();
-
-        return result;
     }
 
     public async Task AddNewProduct(Product productToAdd)
@@ -89,9 +41,9 @@ public class DataAccess : IDataAccess
             .Products
             .FirstOrDefaultAsync(z => z.Id == id);
 
-        if(productTodelete != null)
+        if (productTodelete != null)
 
-        _context.Products.Remove(productTodelete);
+            _context.Products.Remove(productTodelete);
         await _context.SaveChangesAsync();
     }
 
@@ -111,10 +63,10 @@ public class DataAccess : IDataAccess
         {
             PhotoUrl = z.PhotoUrl
         }).ToList();
-            productToEdit.ProductCategories = dto.ProductCategories.Select(z => new ProductCategory()
-            {
-                CategoryId = z.CategoryId
-            }).ToList();
+        productToEdit.ProductCategories = dto.ProductCategories.Select(z => new ProductCategory()
+        {
+            CategoryId = z.CategoryId
+        }).ToList();
 
         await _context.SaveChangesAsync();
 
@@ -131,19 +83,6 @@ public class DataAccess : IDataAccess
             return true;
         else
             return false;
-    }
-
-    public async Task<User> GetUserByGivenLoginCredentials(LoginUserDto userDto)
-    {
-        var user = await _context
-            .Users
-            .Include(z => z.Role)
-            .FirstOrDefaultAsync(z => z.Email == userDto.Email);
-
-        if (user is null)
-            throw new BadRequestException("Invalid username or password");
-
-        return await Task.FromResult(user);
     }
 
     public async Task ActivateAccountIfExist(ActivationEmailDto dto)
@@ -175,17 +114,11 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
-    public async Task<User> GetUserByEmailAddress(string email)
-    {
-        var user = await GetUserByEmail(email);
-        return await Task.FromResult(user);
-    }
-
     public async Task AddProductToUsersCart(CartItem product, int? userId)
     {
         var user = await GetUserById(userId);
 
-        if(user.CartProducts.Any(z => z.ProductId == product.ProductId))
+        if (user.CartProducts.Any(z => z.ProductId == product.ProductId))
             user.CartProducts.SingleOrDefault(x => x.ProductId == product.ProductId).Quantity += product.Quantity;
         else
             user.CartProducts.Add(product);
@@ -193,20 +126,24 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<CartItem>> GetUsersCartItems(int? userId)
-    {
-        var products = await _context
-            .CartProducts
-            .Include(z => z.Product)
-            .Where(z => z.User.Id == userId)
-            .ToListAsync();
-
-        return products;
-    }
-
     public async Task AddNewOrder(Order order, int? userId)
     {
         var user = await GetUserById(userId);
+
+        decimal finalPrice = 0;
+
+        var userCartItems = user
+            .CartProducts
+            .ToList();
+
+        foreach(var item in userCartItems)
+        {
+            finalPrice += item.Product.Price * item.Quantity;
+        }
+
+        order.FinalPrice = finalPrice;
+        order.CartItems = userCartItems;
+
         user.Orders.Add(order);
         await _context.SaveChangesAsync();
     }
@@ -226,15 +163,15 @@ public class DataAccess : IDataAccess
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddInvoiceUrlToOrder(int orderId, int? userId, string? invoiceUrl)
+    public async Task AddInvoiceUrlToOrder(AddInvoiceToOrderDto dto)
     {
-        var user = await GetUserById(userId);
-        var order = await GetOrderById(user, orderId);
+        var user = await GetUserById(dto.userId);
+        var order = await GetOrderById(user, dto.orderId);
 
         if (order == null)
             throw new NotFoundException("OrderNotFound");
 
-        order.InvoiceUrl = invoiceUrl;
+        order.InvoiceUrl = dto.invoiceUrl;
         await _context.SaveChangesAsync();
     }
 
@@ -248,13 +185,18 @@ public class DataAccess : IDataAccess
     public async Task RemoveItemFromUsersCart(int itemId, int? userId)
     {
         var user = await GetUserById(userId);
-        var product = (user.CartProducts.FirstOrDefault(z => z.ProductId == itemId));
+        var product = user.CartProducts.FirstOrDefault(z => z.ProductId == itemId);
 
         if (product == null)
             throw new NotFoundException("Product not found");
 
         user.CartProducts.Remove(product);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task ResetUsersPassword(NewUserPasswordDto dto)
+    {
+        var user = await GetUserByEmail(dto.Email);
     }
 
     private async Task<Order?> GetOrderById(User user, int orderId)
@@ -281,10 +223,7 @@ public class DataAccess : IDataAccess
 
         return user;
     }
-
-
-
-    private async Task<User> GetUserByEmail(string email)
+    public async Task<User> GetUserByEmail(string email)
     {
         var user = await _context
             .Users

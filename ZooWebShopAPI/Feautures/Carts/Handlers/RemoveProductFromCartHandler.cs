@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZooWebShopAPI.DataAccess;
+using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 
 namespace ZooWebShopAPI.Feautures.Carts.Handlers
 {
     public class RemoveProductFromCartHandler : IRequestHandler<RemoveProductFromCartCommand>
     {
-        private readonly IDataAccess _dataAccess;
+        private readonly ICommandDataAccess _dataAccess;
 
-        public RemoveProductFromCartHandler(IDataAccess dataAccess)
+        public RemoveProductFromCartHandler(ICommandDataAccess dataAccess)
         {
             _dataAccess = dataAccess;
         }

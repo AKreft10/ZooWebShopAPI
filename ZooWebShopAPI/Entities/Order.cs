@@ -14,7 +14,6 @@ namespace ZooWebShopAPI.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal FinalPrice { get; set; }
         public DateTime OrderTime { get; set; } = DateTime.Now;
-        public DeliveryAddress DeliveryAddress { get; set; }
         public bool PaidFor { get; set; } = false;
         public int UserId { get; set; }
         public User User { get; set; }

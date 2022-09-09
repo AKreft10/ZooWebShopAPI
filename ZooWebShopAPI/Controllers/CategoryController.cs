@@ -25,7 +25,7 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewCategory([FromBody] AddCategoryByNameDto dto)
         {
-            await _mediator.Send(new AddNewCategoryCommand(dto));
+            await _mediator.Publish(new AddNewCategoryCommand(dto));
             return Ok();
         }
 

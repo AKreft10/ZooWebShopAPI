@@ -20,17 +20,7 @@ namespace ZooWebShopAPI.Feautures.Carts.Handlers
         public async Task Handle(CreateNewOrderCommand notification, CancellationToken cancellationToken)
         {
             var userId = await _mediator.Send(new GetUserIdQuery());
-
-            var order = new Order()
-            {
-                DeliveryAddress = new DeliveryAddress()
-                {
-                    City = notification.dto.City,
-                    PostalCode = notification.dto.PostalCode,
-                    Street = notification.dto.Street,
-                }
-            };
-            await _dataAccess.AddNewOrder(order, userId);
+            await _dataAccess.AddNewOrder(userId);
         }
     }
 }

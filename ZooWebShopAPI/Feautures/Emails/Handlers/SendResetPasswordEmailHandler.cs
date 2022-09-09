@@ -20,7 +20,7 @@ namespace ZooWebShopAPI.Feautures.Emails.Handlers
 
         public async Task Handle(SendEmailResetPasswordCommand notification, CancellationToken cancellationToken)
         {
-            string resetPasswordLink = GenerateActivationLink(notification.dto.Email, notification.dto.ResetToken);
+            string resetPasswordLink = await GenerateActivationLink(notification.dto.Email, notification.dto.ResetToken);
 
             await _fluentEmail
                 .Create()
@@ -30,6 +30,7 @@ namespace ZooWebShopAPI.Feautures.Emails.Handlers
                 .SendAsync();
         }
 
-        private string GenerateActivationLink(string email, string token) => $"https://localhost:7280/account/reset-password?email={email}&ResetToken={token}";
+        private async Task<string> GenerateActivationLink(string email, string token) => 
+            await Task.FromResult($"https://localhost:7280/account/reset-password?email={email}&token={token}");
     }
 }

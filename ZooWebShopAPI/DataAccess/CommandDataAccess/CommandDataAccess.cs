@@ -126,7 +126,7 @@ public class CommandDataAccess : ICommandDataAccess
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddNewOrder(Order order, int? userId)
+    public async Task AddNewOrder(int? userId)
     {
         var user = await GetUserById(userId);
 
@@ -136,13 +136,16 @@ public class CommandDataAccess : ICommandDataAccess
             .CartProducts
             .ToList();
 
-        foreach(var item in userCartItems)
+        foreach (var item in userCartItems)
         {
             finalPrice += item.Product.Price * item.Quantity;
         }
 
-        order.FinalPrice = finalPrice;
-        order.CartItems = userCartItems;
+        var order = new Order()
+        {
+            FinalPrice = finalPrice,
+            CartItems = userCartItems
+        };
 
         user.Orders.Add(order);
         await _context.SaveChangesAsync();
@@ -197,6 +200,13 @@ public class CommandDataAccess : ICommandDataAccess
     public async Task ResetUsersPassword(NewUserPasswordDto dto)
     {
         var user = await GetUserByEmail(dto.Email);
+
+        if (user.ResetPasswordToken != dto.Token || user.ResetPasswordTokenExpires > DateTime.Now)
+            throw new Exception("Invalid token");
+
+        user.ResetPasswordTokenExpires = null;
+        user.ResetPasswordToken = null;
+        user.PasswordHash = dto.NewPasswordHash;
     }
 
     private async Task<Order?> GetOrderById(User user, int orderId)
@@ -208,7 +218,7 @@ public class CommandDataAccess : ICommandDataAccess
         if (order == null)
             throw new NotFoundException("Order not found");
 
-        return order;
+        return await Task.FromResult(order);
     }
     public async Task<User> GetUserById(int? id)
     {
@@ -216,6 +226,7 @@ public class CommandDataAccess : ICommandDataAccess
             .Users
             .Include(x => x.Orders)
             .Include(x => x.CartProducts)
+            .ThenInclude(x => x.Product)
             .FirstOrDefaultAsync(z => z.Id == id);
 
         if (user is null)
@@ -229,6 +240,7 @@ public class CommandDataAccess : ICommandDataAccess
             .Users
             .Include(x => x.Orders)
             .Include(x => x.CartProducts)
+            .ThenInclude(x => x.Product)
             .Include(x => x.Role)
             .FirstOrDefaultAsync(z => z.Email == email);
 

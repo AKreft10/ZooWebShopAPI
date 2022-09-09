@@ -36,7 +36,7 @@ namespace ZooWebShopAPI.Controllers
         [Route("add-item")]
         public async Task<IActionResult> AddItemToCart([FromBody] AddProductToCartDto dto)
         {
-            await _mediator.Send(new AddProductToCartCommand(dto));
+            await _mediator.Publish(new AddProductToCartCommand(dto));
             return Ok();
         }
 
@@ -44,15 +44,15 @@ namespace ZooWebShopAPI.Controllers
         [Route("remove-item/{itemId}")]
         public async Task<IActionResult> RemoveItemFromCart([FromRoute] int itemId)
         {
-            await _mediator.Send(new RemoveProductFromCartCommand(itemId, await GetUserId()));
+            await _mediator.Publish(new RemoveProductFromCartCommand(itemId, await GetUserId()));
             return Ok("Item has been successfully removed from the cart.");
         }
 
         [HttpPost]
         [Route("submit")]
-        public async Task<IActionResult> CreateNewOrder([FromBody] DeliveryAddressDto? dto)
+        public async Task<IActionResult> CreateNewOrder()
         {
-            await _mediator.Send(new CreateNewOrderCommand(dto));
+            await _mediator.Publish(new CreateNewOrderCommand());
             return Ok();
         }
 
@@ -61,7 +61,7 @@ namespace ZooWebShopAPI.Controllers
         public async Task<IActionResult> PayForOrder([FromRoute] int id)
         {
             //pay for order
-            await _mediator.Send(new PayForOrderCommand(id));
+            await _mediator.Publish(new PayForOrderCommand(id));
 
             //generate invoice 
             var invoiceData = new InvoiceDataDto()

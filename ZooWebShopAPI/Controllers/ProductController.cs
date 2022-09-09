@@ -36,22 +36,22 @@ public class ProductController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddNewProduct([FromBody] AddProductDto dto)
     {
-        await _mediator.Send(new AddNewProductCommand(dto));
-        return Ok();
+        await _mediator.Publish(new AddNewProductCommand(dto));
+        return Ok("Item has been successfully added to the cart.");
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProductById([FromRoute]int id)
     {
         await _mediator.Send(new DeleteProductByIdCommand(id));
-        return NoContent();
+        return Ok("Item has been successfully removed from the cart.");
     }
 
     [HttpPut]
     public async Task<IActionResult> EditProduct([FromBody]EditProductDto dto)
     {
         await _mediator.Send(new EditProductCommand(dto));
-        return Ok();
+        return Ok("Item has been successfully edited.");
     }
 
 }

@@ -20,7 +20,7 @@ namespace ZooWebShopAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterNewUser([FromBody] RegisterUserDto dto)
         {
-            await _mediator.Send(new Feautures.Accounts.Commands.RegisterNewUserCommand(dto));
+            await _mediator.Publish(new RegisterNewUserCommand(dto));
             return Ok("Email with activation link has been sent. Click the button to activate your account.");
         }
 
@@ -32,25 +32,33 @@ namespace ZooWebShopAPI.Controllers
         }
 
         [HttpPost("activate")]
-        public async Task<IActionResult> ActivateAccount([FromQuery]ActivationEmailDto dto)
+        public async Task<IActionResult> ActivateAccount([FromQuery] ActivationEmailDto dto)
         {
-            await _mediator.Send(new ActivateAccountCommand(dto));
+            await _mediator.Publish(new ActivateAccountCommand(dto));
             return Ok("Account has been activated!");
         }
 
         [HttpPost("forget-password")]
-        public async Task<IActionResult> SendResetEmail([FromQuery]string email)
+        public async Task<IActionResult> SendResetEmail([FromQuery] string email)
         {
-            await _mediator.Send(new SetResetPasswordToken(email));
+            await _mediator.Publish(new SetResetPasswordToken(email));
             return Ok("A link to reset password has been sent to your email address");
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody]CreateNewPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromQuery]string email, string token, [FromBody] NewPasswordDto dto)
         {
-            var user = await _mediator.Send(new GetUserByEmailAddressQuery(dto.Email));
+            var user = await _mediator.Send(new GetUserByEmailAddressQuery(email));
 
-            await _mediator.Send(new ResetPasswordCommand(dto, user));
+            var passwordRecoveryDto = new CreateNewPasswordDto()
+            {
+                Email = email,
+                ResetToken = token,
+                NewPassword = dto.NewPasword,
+                ConfirmNewPassword = dto.ConfirmNewPassword
+            };
+
+            await _mediator.Publish(new ResetPasswordCommand(passwordRecoveryDto, user));
             return Ok("Your password has been reset successfully!");
         }
     }

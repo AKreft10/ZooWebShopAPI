@@ -16,7 +16,7 @@ namespace ZooWebShopAPI.DataAccess.CommandDataAccess
         Task ResetPasswordSetToken(ResetPasswordDto dto);
         Task ChangeUserPassword(NewUserPasswordDto dto);
         Task AddProductToUsersCart(CartItem product, int? userId);
-        Task AddNewOrder(Order order, int? userId);
+        Task AddNewOrder(int? userId);
         Task PayForOrder(int orderId, int? userId);
         Task AddInvoiceUrlToOrder(AddInvoiceToOrderDto dto);
         Task EmptyUsersCart(int? id);

@@ -57,7 +57,7 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
                 ActivationToken = randomActivationToken
             };
 
-            await _mediator.Send(new SendActivationEmailCommand(emailActivationData));
+            await _mediator.Publish(new SendActivationEmailCommand(emailActivationData));
         }
 
         private string GenerateRandomActivationToken()

@@ -61,5 +61,12 @@ namespace ZooWebShopAPI.Controllers
             await _mediator.Publish(new ResetPasswordCommand(passwordRecoveryDto, user));
             return Ok("Your password has been reset successfully!");
         }
+
+        [HttpPost("grant-admin-role")]
+        public async Task<IActionResult> GrantAdminRole([FromQuery]int userId)
+        {
+            await _mediator.Publish(new GrantAdminRoleCommand(userId));
+            return Ok();
+        }
     }
 }

@@ -18,6 +18,5 @@ namespace ZooWebShopAPI.Dtos
         public string Street { get; set; } = string.Empty;
         public string PostalCode { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        public int RoleId { get; set; } = 1;
     }
 }

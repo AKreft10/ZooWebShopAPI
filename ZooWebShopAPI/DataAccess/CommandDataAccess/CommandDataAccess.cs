@@ -209,6 +209,13 @@ public class CommandDataAccess : ICommandDataAccess
         user.PasswordHash = dto.NewPasswordHash;
     }
 
+    public async Task GrantAdminRole(int userId)
+    {
+        var user = await GetUserById(userId);
+        user.RoleId = 2;
+        await _context.SaveChangesAsync();
+    }
+
     private async Task<Order?> GetOrderById(User user, int orderId)
     {
         var order = user

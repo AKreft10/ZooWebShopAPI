@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
@@ -62,6 +63,7 @@ namespace ZooWebShopAPI.Controllers
             return Ok("Your password has been reset successfully!");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("grant-admin-role")]
         public async Task<IActionResult> GrantAdminRole([FromQuery]int userId)
         {

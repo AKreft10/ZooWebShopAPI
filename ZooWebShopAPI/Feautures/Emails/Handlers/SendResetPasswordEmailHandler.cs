@@ -1,10 +1,5 @@
 ﻿using FluentEmail.Core;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooWebShopAPI.Feautures.Emails.Commands;
 
 namespace ZooWebShopAPI.Feautures.Emails.Handlers
@@ -30,7 +25,7 @@ namespace ZooWebShopAPI.Feautures.Emails.Handlers
                 .SendAsync();
         }
 
-        private async Task<string> GenerateActivationLink(string email, string token) => 
+        private async Task<string> GenerateActivationLink(string email, string token) =>
             await Task.FromResult($"https://localhost:7280/account/reset-password?email={email}&token={token}");
     }
 }

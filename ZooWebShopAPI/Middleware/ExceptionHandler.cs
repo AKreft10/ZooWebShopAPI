@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.Exceptions;
+﻿using ZooWebShopAPI.Exceptions;
 
 namespace ZooWebShopAPI.Middleware
 {
@@ -15,7 +10,7 @@ namespace ZooWebShopAPI.Middleware
             {
                 await next.Invoke(context);
             }
-            catch(BadRequestException badRequestException)
+            catch (BadRequestException badRequestException)
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync(badRequestException.Message);

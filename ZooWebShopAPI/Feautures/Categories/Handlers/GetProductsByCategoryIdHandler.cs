@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Categories.Queries;
 using ZooWebShopAPI.Models;

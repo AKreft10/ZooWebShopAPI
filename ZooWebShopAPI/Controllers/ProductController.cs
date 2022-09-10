@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.Dtos;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Products.Commands;
 using ZooWebShopAPI.Feautures.Products.Queries;
 
@@ -20,7 +19,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProductList([FromQuery]PaginationParameters parameters)
+    public async Task<IActionResult> GetProductList([FromQuery] PaginationParameters parameters)
     {
         var result = await _mediator.Send(new GetAllProductsQuery(parameters));
         return Ok(result);
@@ -33,7 +32,7 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> AddNewProduct([FromBody] AddProductDto dto)
     {
@@ -43,7 +42,7 @@ public class ProductController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProductById([FromRoute]int id)
+    public async Task<IActionResult> DeleteProductById([FromRoute] int id)
     {
         await _mediator.Send(new DeleteProductByIdCommand(id));
         return Ok("Item has been successfully removed from the cart.");
@@ -51,7 +50,7 @@ public class ProductController : ControllerBase
 
     [Authorize(Roles = "Admin")]
     [HttpPut]
-    public async Task<IActionResult> EditProduct([FromBody]EditProductDto dto)
+    public async Task<IActionResult> EditProduct([FromBody] EditProductDto dto)
     {
         await _mediator.Send(new EditProductCommand(dto));
         return Ok("Item has been successfully edited.");

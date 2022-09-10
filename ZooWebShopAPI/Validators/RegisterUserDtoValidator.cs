@@ -1,10 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 
@@ -22,7 +16,7 @@ namespace ZooWebShopAPI.Validators
                 .Custom((value, context) =>
                 {
                     var emailInUseArleady = dataAccess.CheckIfEmailArleadyExist(value);
-                    if(emailInUseArleady)
+                    if (emailInUseArleady)
                     {
                         context.AddFailure("That email is arleady in use");
                     }

@@ -47,7 +47,7 @@ namespace ZooWebShopAPI.Controllers
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromQuery]string email, string token, [FromBody] NewPasswordDto dto)
+        public async Task<IActionResult> ResetPassword([FromQuery] string email, string token, [FromBody] NewPasswordDto dto)
         {
             var user = await _mediator.Send(new GetUserByEmailAddressQuery(email));
 
@@ -65,7 +65,7 @@ namespace ZooWebShopAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("grant-admin-role")]
-        public async Task<IActionResult> GrantAdminRole([FromQuery]int userId)
+        public async Task<IActionResult> GrantAdminRole([FromQuery] int userId)
         {
             await _mediator.Publish(new GrantAdminRoleCommand(userId));
             return Ok();

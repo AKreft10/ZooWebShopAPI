@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Products.Commands;
-using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Handlers;
 

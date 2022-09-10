@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
-using QuestPDF.Previewer;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Invoices.Commands;
 
@@ -134,11 +133,11 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
 
                             int iterationCount = 1;
 
-                            foreach(var item in dto.Products)
+                            foreach (var item in dto.Products)
                             {
                                 table.Cell().AlignCenter().Text(iterationCount);
                                 table.Cell().Text(item.Product.Name);
-                                table.Cell().AlignCenter().Text(Math.Round(item.Product.Price,2));
+                                table.Cell().AlignCenter().Text(Math.Round(item.Product.Price, 2));
                                 table.Cell().AlignCenter().Text(item.Quantity);
                                 iterationCount++;
                                 subtotal += (item.Product.Price * item.Quantity);
@@ -163,9 +162,9 @@ namespace ZooWebShopAPI.Feautures.Invoices.Handlers
                                 header.Cell().AlignRight().Text("TOTAL").SemiBold();
                             });
 
-                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal,2));
-                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal*0.23m,2));
-                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal*1.23m,2));
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal, 2));
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal * 0.23m, 2));
+                            table.Cell().AlignRight().Text("$" + Math.Round(subtotal * 1.23m, 2));
 
                         });
 

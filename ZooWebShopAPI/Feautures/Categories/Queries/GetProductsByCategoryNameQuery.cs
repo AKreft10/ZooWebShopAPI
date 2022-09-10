@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using ZooWebShopAPI.Models;
-using ZooWebShopAPI.ReadModels;
 
 namespace ZooWebShopAPI.Feautures.Categories.Queries
 {

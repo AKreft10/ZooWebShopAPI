@@ -1,4 +1,3 @@
-using CloudinaryDotNet;
 using FluentEmail.MailKitSmtp;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -60,7 +59,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ExceptionHandler>();
 builder.Services.AddScoped<IValidator<AddCategoryByNameDto>, AddCategoryByNameValidator>();
 builder.Services.AddScoped<IValidator<EditProductDto>, EditProductValidator>();
-builder.Services.AddScoped<IValidator<RegisterUserDto>,RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddFluentEmail(emailConfiguration.EmailSender, emailConfiguration.EmailFrom)

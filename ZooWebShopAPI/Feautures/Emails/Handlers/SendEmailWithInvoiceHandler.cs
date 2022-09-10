@@ -1,11 +1,6 @@
 ﻿using FluentEmail.Core;
 using FluentEmail.Core.Models;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooWebShopAPI.Feautures.Emails.Commands;
 
 namespace ZooWebShopAPI.Feautures.Emails.Handlers

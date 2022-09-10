@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Categories.Commands;
 using ZooWebShopAPI.Feautures.Categories.Queries;
@@ -33,14 +28,14 @@ namespace ZooWebShopAPI.Controllers
         }
 
         [HttpGet("id/{categoryId}")]
-        public async Task<IActionResult> GetProductsByCategoryId([FromRoute]int categoryId)
+        public async Task<IActionResult> GetProductsByCategoryId([FromRoute] int categoryId)
         {
             var result = await _mediator.Send(new GetProductsByCategoryIdQuery(categoryId));
             return Ok(result);
         }
 
         [HttpGet("name/{categoryName}")]
-        public async Task<IActionResult> GetProductsByCategoryName([FromRoute]string categoryName)
+        public async Task<IActionResult> GetProductsByCategoryName([FromRoute] string categoryName)
         {
             var result = await _mediator.Send(new GetProductsByCategoryNameQuery(categoryName));
             return Ok(result);

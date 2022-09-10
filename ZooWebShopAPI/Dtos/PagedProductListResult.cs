@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.Models;
-
-namespace ZooWebShopAPI.Dtos
+﻿namespace ZooWebShopAPI.Dtos
 {
     public class PagedProductListResult<T>
     {
@@ -22,7 +15,7 @@ namespace ZooWebShopAPI.Dtos
             CurrentPage = currentPage;
             ItemsPerPage = itemsPerPage;
             ItemsFrom = itemsPerPage * (currentPage - 1) + 1;
-            ItemsTo = ItemsFrom + ItemsPerPage-1;
+            ItemsTo = ItemsFrom + ItemsPerPage - 1;
             TotalPagesNumber = (int)Math.Ceiling(totalItemsCount / (double)itemsPerPage);
         }
     }

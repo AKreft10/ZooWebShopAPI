@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.Entities;
+﻿using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.Persistence.Seeders
@@ -26,14 +21,14 @@ namespace ZooWebShopAPI.Persistence.Seeders
                 await _context.SaveChangesAsync();
             }
 
-            if(!_context.Roles.Any())
+            if (!_context.Roles.Any())
             {
                 var roles = GetRoles();
                 await _context.Roles.AddRangeAsync(roles);
                 await _context.SaveChangesAsync();
             }
 
-            if(!_context.Categories.Any())
+            if (!_context.Categories.Any())
             {
                 var categories = GetCategories();
                 await _context.Categories.AddRangeAsync(categories);

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 using ZooWebShopAPI.UserContext.Queries;
 

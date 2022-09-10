@@ -1,15 +1,8 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Exceptions;
 using ZooWebShopAPI.Feautures.Categories.Queries;
 using ZooWebShopAPI.Models;
-using ZooWebShopAPI.ReadModels;
 
 namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {

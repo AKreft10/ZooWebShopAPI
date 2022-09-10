@@ -1,10 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
 using ZooWebShopAPI.Dtos;
 
@@ -19,7 +13,7 @@ namespace ZooWebShopAPI.Validators
                 {
                     var categoryNameInUse = dataAccess.CheckIfCategoryArleadyExist(value);
 
-                    if(categoryNameInUse)
+                    if (categoryNameInUse)
                     {
                         context.AddFailure("Name", "That category name is taken");
                     }

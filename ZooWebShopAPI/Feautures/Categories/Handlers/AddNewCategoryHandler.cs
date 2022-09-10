@@ -1,10 +1,7 @@
 ﻿using MediatR;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.CommandDataAccess;
-using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Categories.Commands;
-using ZooWebShopAPI.Models;
 
 namespace ZooWebShopAPI.Feautures.Categories.Handlers
 {

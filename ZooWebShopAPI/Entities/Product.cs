@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ZooWebShopAPI.Entities
 {
@@ -13,11 +8,11 @@ namespace ZooWebShopAPI.Entities
         public string Name { get; set; } = string.Empty;
         [Column(TypeName = "decimal(18,2)")]
         public decimal OriginalPrice { get; set; }
-        [Column(TypeName="decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public List<Photo> Photos { get; set; }
         public int MainPhotoId { get; set; } = 1;
         public List<ProductCategory> ProductCategories { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now; 
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

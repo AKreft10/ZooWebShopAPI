@@ -1,13 +1,6 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZooWebShopAPI.DataAccess;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
-using ZooWebShopAPI.Entities;
 using ZooWebShopAPI.Feautures.Products.Queries;
 using ZooWebShopAPI.Models;
 using ZooWebShopAPI.ReadModels;
@@ -25,7 +18,7 @@ namespace ZooWebShopAPI.Handlers
 
         public async Task<PagedProductListResult<ProductModel>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _dataAccess.GetAllProducts(request.parameters);     
+            var result = await _dataAccess.GetAllProducts(request.parameters);
             var productModels = result.Select(z => new ProductModel()
             {
                 Name = z.Name,

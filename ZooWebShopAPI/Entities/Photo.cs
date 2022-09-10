@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace ZooWebShopAPI.Entities
 {
@@ -13,6 +8,6 @@ namespace ZooWebShopAPI.Entities
         public string PhotoUrl { get; set; } = string.Empty;
         [JsonIgnore]
         public Product Product { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now; 
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

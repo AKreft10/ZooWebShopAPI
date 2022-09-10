@@ -42,7 +42,7 @@ namespace ZooWebShopAPI.Feautures.Accounts.Handlers
                 Street = notification.dto.Street,
                 PostalCode = notification.dto.PostalCode,
                 PhoneNumber = notification.dto.PhoneNumber,
-                RoleId = notification.dto.RoleId,
+                RoleId = 1,
                 ActivationToken = randomActivationToken
             };
 

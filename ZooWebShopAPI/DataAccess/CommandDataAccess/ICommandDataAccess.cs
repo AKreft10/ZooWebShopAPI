@@ -22,5 +22,6 @@ namespace ZooWebShopAPI.DataAccess.CommandDataAccess
         Task EmptyUsersCart(int? id);
         Task RemoveItemFromUsersCart(int itemId, int? userId);
         Task<User> GetUserByEmail(string email);
+        Task GrantAdminRole(int userId);
     }
 }

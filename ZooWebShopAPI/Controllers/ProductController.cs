@@ -33,6 +33,7 @@ public class ProductController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles="Admin")]
     [HttpPost]
     public async Task<IActionResult> AddNewProduct([FromBody] AddProductDto dto)
     {
@@ -40,6 +41,7 @@ public class ProductController : ControllerBase
         return Ok("Item has been successfully added to the cart.");
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProductById([FromRoute]int id)
     {
@@ -47,6 +49,7 @@ public class ProductController : ControllerBase
         return Ok("Item has been successfully removed from the cart.");
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     public async Task<IActionResult> EditProduct([FromBody]EditProductDto dto)
     {

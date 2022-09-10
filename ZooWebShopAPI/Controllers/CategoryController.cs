@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,9 @@ namespace ZooWebShopAPI.Controllers
             _mediator = mediator;
         }
 
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddNewCategory([FromBody] AddCategoryByNameDto dto)
         {
             await _mediator.Publish(new AddNewCategoryCommand(dto));

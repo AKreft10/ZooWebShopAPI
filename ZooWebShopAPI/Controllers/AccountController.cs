@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.Dtos;
 using ZooWebShopAPI.Feautures.Accounts.Commands;
@@ -60,6 +61,14 @@ namespace ZooWebShopAPI.Controllers
 
             await _mediator.Publish(new ResetPasswordCommand(passwordRecoveryDto, user));
             return Ok("Your password has been reset successfully!");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("grant-admin-role")]
+        public async Task<IActionResult> GrantAdminRole([FromQuery]int userId)
+        {
+            await _mediator.Publish(new GrantAdminRoleCommand(userId));
+            return Ok();
         }
     }
 }

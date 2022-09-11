@@ -8,9 +8,9 @@ namespace ZooWebShopAPI.DataAccess.QueryDataAccess
 {
     public class QueryDataAccess : IQueryDataAccess
     {
-        private readonly AppDbContext _context;
+        private readonly QueryDbContext _context;
 
-        public QueryDataAccess(AppDbContext context)
+        public QueryDataAccess(QueryDbContext context)
         {
             _context = context;
         }

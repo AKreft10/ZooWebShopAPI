@@ -132,5 +132,19 @@ namespace ZooWebShopAPI.DataAccess.QueryDataAccess
 
             return user;
         }
+
+        public async Task<InvoiceDataDto> GetInvoiceDataByUserId(int? id)
+        {
+            var user = await GetUserById(id);
+            var products = user.CartProducts.ToList();
+
+            InvoiceDataDto invoiceData = new()
+            {
+                User = user,
+                Products = products
+            };
+
+            return await Task.FromResult(invoiceData);
+        }
     }
 }

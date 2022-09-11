@@ -13,5 +13,6 @@ namespace ZooWebShopAPI.DataAccess.QueryDataAccess
         Task<User> GetUserByEmailAddress(string email);
         Task<List<CartItem>> GetUsersCartItems(int? userId);
         Task<User> GetUserById(int? id);
+        Task<InvoiceDataDto> GetInvoiceDataByUserId(int? id);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZooWebShopAPI.DataAccess.QueryDataAccess;
 using ZooWebShopAPI.Dtos;
+using ZooWebShopAPI.Feautures.Accounts.Queries;
 using ZooWebShopAPI.Feautures.Carts.Commands;
 using ZooWebShopAPI.Feautures.Carts.Queries;
 using ZooWebShopAPI.Feautures.Emails.Commands;
@@ -17,12 +18,10 @@ namespace ZooWebShopAPI.Controllers
     public class CartController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IQueryDataAccess _dataAccess;
 
-        public CartController(IMediator mediator, IQueryDataAccess dataAccess)
+        public CartController(IMediator mediator)
         {
             _mediator = mediator;
-            _dataAccess = dataAccess;
         }
 
         [HttpGet]
@@ -60,15 +59,13 @@ namespace ZooWebShopAPI.Controllers
         [Route("pay-for-order/{id}")]
         public async Task<IActionResult> PayForOrder([FromRoute] int id)
         {
+            var userId = await GetUserId();
+
             //pay for order
             await _mediator.Publish(new PayForOrderCommand(id));
 
             //generate invoice 
-            var invoiceData = new InvoiceDataDto()
-            {
-                User = await _dataAccess.GetUserById(await GetUserId()),
-                Products = await _dataAccess.GetUsersCartItems(await GetUserId())
-            };
+            var invoiceData = await _mediator.Send(new GetInvoiceDataQuery(userId));
 
             var invoice = await _mediator.Send(new GenerateInvoiceCommand(invoiceData));
             var invoiceUrl = await _mediator.Send(new UploadInvoiceCommand(invoice));
@@ -78,7 +75,7 @@ namespace ZooWebShopAPI.Controllers
             AddInvoiceToOrderDto addInvoiceToOrderDto = new()
             {
                 orderId = id,
-                userId = await GetUserId(),
+                userId = userId,
                 invoiceUrl = invoiceUrl
             };
 
@@ -88,7 +85,7 @@ namespace ZooWebShopAPI.Controllers
 
             var dataToSendAnEmail = new SendEmailWithInvoiceDto()
             {
-                user = await _dataAccess.GetUserById(await GetUserId()),
+                user = await _mediator.Send(new GetUserByIdQuery(userId)),
                 invoice = invoice,
             };
 

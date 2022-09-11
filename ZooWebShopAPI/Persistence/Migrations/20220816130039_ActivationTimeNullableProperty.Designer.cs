@@ -11,7 +11,7 @@ using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CommandDbContext))]
     [Migration("20220816130039_ActivationTimeNullableProperty")]
     partial class ActivationTimeNullableProperty
     {

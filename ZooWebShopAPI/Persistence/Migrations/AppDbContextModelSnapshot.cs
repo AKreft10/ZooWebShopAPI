@@ -10,7 +10,7 @@ using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CommandDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

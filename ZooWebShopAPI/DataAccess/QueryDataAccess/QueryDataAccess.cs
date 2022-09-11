@@ -8,9 +8,9 @@ namespace ZooWebShopAPI.DataAccess.QueryDataAccess
 {
     public class QueryDataAccess : IQueryDataAccess
     {
-        private readonly AppDbContext _context;
+        private readonly QueryDbContext _context;
 
-        public QueryDataAccess(AppDbContext context)
+        public QueryDataAccess(QueryDbContext context)
         {
             _context = context;
         }
@@ -131,6 +131,20 @@ namespace ZooWebShopAPI.DataAccess.QueryDataAccess
                 throw new NotFoundException("User not found");
 
             return user;
+        }
+
+        public async Task<InvoiceDataDto> GetInvoiceDataByUserId(int? id)
+        {
+            var user = await GetUserById(id);
+            var products = user.CartProducts.ToList();
+
+            InvoiceDataDto invoiceData = new()
+            {
+                User = user,
+                Products = products
+            };
+
+            return await Task.FromResult(invoiceData);
         }
     }
 }

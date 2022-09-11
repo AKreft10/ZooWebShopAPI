@@ -11,7 +11,7 @@ using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CommandDbContext))]
     [Migration("20220908161601_removeDeliveryAddress")]
     partial class removeDeliveryAddress
     {

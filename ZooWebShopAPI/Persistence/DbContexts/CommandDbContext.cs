@@ -3,11 +3,11 @@ using ZooWebShopAPI.Entities;
 
 namespace ZooWebShopAPI.Persistence.DbContexts
 {
-    public class AppDbContext : DbContext
+    public class CommandDbContext : DbContext
     {
         private readonly IConfiguration _configuration;
 
-        public AppDbContext(IConfiguration configuration)
+        public CommandDbContext(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -46,7 +46,6 @@ namespace ZooWebShopAPI.Persistence.DbContexts
                 .HasOne(pc => pc.Category)
                 .WithMany(p => p.ProductCategories)
                 .HasForeignKey(pc => pc.CategoryId);
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -5,9 +5,9 @@ namespace ZooWebShopAPI.Persistence.Seeders
 {
     public class DbSeeder
     {
-        private readonly AppDbContext _context;
+        private readonly CommandDbContext _context;
 
-        public DbSeeder(AppDbContext context)
+        public DbSeeder(CommandDbContext context)
         {
             _context = context;
         }

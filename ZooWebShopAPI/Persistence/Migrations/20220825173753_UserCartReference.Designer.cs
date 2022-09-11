@@ -11,7 +11,7 @@ using ZooWebShopAPI.Persistence.DbContexts;
 
 namespace ZooWebShopAPI.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CommandDbContext))]
     [Migration("20220825173753_UserCartReference")]
     partial class UserCartReference
     {

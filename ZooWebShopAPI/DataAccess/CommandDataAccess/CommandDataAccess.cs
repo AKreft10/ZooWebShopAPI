@@ -8,9 +8,9 @@ namespace ZooWebShopAPI.DataAccess.CommandDataAccess;
 
 public class CommandDataAccess : ICommandDataAccess
 {
-    private readonly AppDbContext _context;
+    private readonly CommandDbContext _context;
 
-    public CommandDataAccess(AppDbContext context)
+    public CommandDataAccess(CommandDbContext context)
     {
         _context = context;
     }
